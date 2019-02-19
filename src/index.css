@@ -12,3 +12,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#icon-credit {
+  background-color: rgba(142, 182, 214, 0.795);
+  text-align: center;
+}
