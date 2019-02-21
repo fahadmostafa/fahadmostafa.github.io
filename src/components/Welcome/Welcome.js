@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Button } from "reactstrap";
+import Background from '../../images/welcomebg.jpg';
 import "./Welcome.css";
 
 class Welcome extends Component {
@@ -13,21 +13,34 @@ class Welcome extends Component {
 
   render() {
     return (
-      <div className='text-center'>
-      <div className='row header-setting'>
-          <div className='col'><h1 className="display-4" id='myh1'>Weather Warning System - <h1 className='display-4' id='myh1-2'>DSOA</h1></h1></div>
+      <div className="hero" style={{backgroundImage: `url(${Background})`}}>
+    <div className="container text-center">
+      <div className="row">
+        <div className="col-md-12">
+          <a className="hero-brand" href="./" title="Home"><img alt="DSOA Logo" src="img/logo.png"/></a>
+        </div>
       </div>
-      <div className='row btn-bar justify-content-center'>
-        <div className='col btn-group'>
-          <button onClick={this.onClickLogin} className='btn btn-lg btn-success'>
+
+      <div className="col-md-12">
+        <h1>
+            Weather Warning System
+          </h1>
+
+        <p className="tagline">
+          Please login to view user dashboard or signup if you don't have an account.
+        </p>
+		<div class='btn-group'>
+        <button onClick={this.onClickLogin} className='btn btn-lg btn-success'>
               Login
           </button>
           <button onClick={this.onClickSignup} className='btn btn-lg btn-danger'>
               Signup
           </button>
-        </div>
+		  </div>
       </div>
-      </div>
+    </div>
+
+  </div>
     );
   }
 }
