@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {PostData} from '../../services/PostData';
+//import {PostData} from '../../services/PostData';
 import {Redirect} from 'react-router-dom';
 import './Signup.css';
 
 class Signup extends Component {
-
+/*
   constructor(props){
     super(props);
    
@@ -33,17 +33,18 @@ class Signup extends Component {
       
      });
     }
-  }
+  } */
 
  onChange(e){
    this.setState({[e.target.name]:e.target.value});
   }
 
   render() {
+    /*
     if (this.state.redirectToReferrer || sessionStorage.getItem('userData')) {
       return (<Redirect to={'/home'}/>)
     }
-   
+   */
   
 
     return (

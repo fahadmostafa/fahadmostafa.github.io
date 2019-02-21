@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
-import {PostData} from '../../services/PostData';
+//import {PostData} from '../../services/PostData';
 import './Login.css';
 
 class Login extends Component {
-
+/*
   constructor(){
     super();
    
@@ -33,7 +33,7 @@ class Login extends Component {
       });
     }
     
-   }
+  } */
 
   onChange(e){
     this.setState({[e.target.name]:e.target.value});
@@ -43,7 +43,7 @@ class Login extends Component {
   
 
   render() {
-
+/*
      if (this.state.redirectToReferrer) {
       return (<Redirect to={'/home'}/>)
     }
@@ -51,7 +51,7 @@ class Login extends Component {
     if(sessionStorage.getItem('userData')){
       return (<Redirect to={'/home'}/>)
     }
-
+*/
      return (
       <div className="row" id="Body">
         <div className="medium-5 columns left">
