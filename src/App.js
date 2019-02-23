@@ -14,11 +14,11 @@ class App extends Component {
   }
   render() {
     return (
-      <div className='container-fluid'>
-        <div>
+      <div className="main-contain">
+        
           <Routes name={this.state.appName} />
           <Footer />
-        </div>
+        
       </div>
     );
   }

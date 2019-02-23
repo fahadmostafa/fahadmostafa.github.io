@@ -1,29 +1,3 @@
-.header-setting {
-    color: #282c34;
-}
-
-#myh1 {
-    font-size: 8vh;
-}
-
-#myh1-2 {
-    font-size: 8vh;
-    color: #2e539b;
-    display: inline;
-}
-
-.btn-bar {
-    margin-top: 60px;
-}
-
-.login-btn {
-    margin-right: 5px;
-}
-
-.signup-btn {
-    margin-left: 5px;
-}
-
 .hero {
     display: table;
     position: relative;
@@ -60,12 +34,28 @@
     width: 100%;
   }
 
-.hero-brand {
-    margin-bottom: 35px;
+  .hero-brand:hover {
+    opacity: .75;
   }
 
   .hero {
     padding: 75px 0;
+  }
+
+  .web-name {
+      margin-top: 80px;
+      font-family: 'Raleway', sans-serif;
+  }
+
+  .tagline {
+    font-family: "Raleway", Helvetica, Arial, sans-serif;
+    font-size: 3vh;
+    margin: 45px 0 75px 0;
+    color: #fff;
+  }
+
+  .btn-style {
+    font-family: "Roboto", Helvetica, Arial, sans-serif;
   }
 
 /* Smartphones (portrait and landscape) ----------- */
@@ -73,27 +63,21 @@
 and (min-device-width : 320px)
 and (max-device-width : 480px) {
 /* Styles */
-.header-setting {
-    margin-top: 100px;
-}
+
 }
 
 /* Smartphones (landscape) ----------- */
 @media only screen
 and (min-width : 321px) {
 /* Styles */
-.header-setting {
-    margin-top: 100px;
-}
+
 }
 
 /* Smartphones (portrait) ----------- */
 @media only screen
 and (max-width : 320px) {
 /* Styles */
-.header-setting {
-    margin-top: 100px;
-}
+
 }
 
 /* iPads (portrait and landscape) ----------- */
@@ -101,9 +85,7 @@ and (max-width : 320px) {
 and (min-device-width : 768px)
 and (max-device-width : 1024px) {
 /* Styles */
-.header-setting {
-    margin-top: 180px;
-}
+
 }
 
 /* iPads (landscape) ----------- */
@@ -112,9 +94,7 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : landscape) {
 /* Styles */
-.header-setting {
-    margin-top: 180px;
-}
+
 }
 
 /* iPads (portrait) ----------- */
@@ -123,27 +103,21 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : portrait) {
 /* Styles */
-.header-setting {
-    margin-top: 150px;
-}
+
 }
 
 /* Desktops and laptops ----------- */
 @media only screen
 and (min-width : 1224px) {
 /* Styles */
-.header-setting {
-    margin-top: 180px;
-}
+
 }
 
 /* Large screens ----------- */
 @media only screen
 and (min-width : 1824px) {
 /* Styles */
-.header-setting {
-    margin-top: 180px;
-}
+
 }
 
 /* iPhone 4 ----------- */
@@ -151,7 +125,21 @@ and (min-width : 1824px) {
 only screen and (-webkit-min-device-pixel-ratio : 1.5),
 only screen and (min-device-pixel-ratio : 1.5) {
 /* Styles */
-.header-setting {
-    margin-top: 80px;
+
 }
+
+@media (max-width: 61.9em) {
+.hero-brand {
+    margin-bottom: 35px;
+  }
+  .tagline {
+    margin: 35px 0;
+  }
+  h1 {
+    font-size: 32px;
+    margin: 0;
+  }
+  .hero {
+    padding: 75px 0;
+  }
 }
