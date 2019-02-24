@@ -5,9 +5,11 @@ import './NotFound.css';
 class NotFound extends Component {
   render() {
     return (
-      <div className="row small-up-2 medium-up-3 large-up-4" id="Body">
-      <div className="medium-12 columns">
-        <h2>404 Page</h2>
+      <div className="container-fluid">
+      <div className="row text-center">
+      <div className="col">
+        <h2>404 Page Not Found</h2>
+        </div>
       </div>
     </div>
     );

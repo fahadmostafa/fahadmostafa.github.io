@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import Background from '../../images/login-bg.jpg';
+import React, { Component } from "react";
+import Background from "../../images/login-bg.jpg";
 //import {Redirect} from 'react-router-dom';
 //import {PostData} from '../../services/PostData';
-import './Login.css';
-import Logo from '../../images/dsoa-logo-white.png';
+import "./Login.css";
+import Logo from "../../images/dsoa-logo-white.png";
 
 class Login extends Component {
-/*
+  /*
   constructor(){
     super();
    
@@ -37,15 +37,12 @@ class Login extends Component {
     
   } */
 
-  onChange(e){
-    this.setState({[e.target.name]:e.target.value});
-   }
-
-  
-  
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
   render() {
-/*
+    /*
      if (this.state.redirectToReferrer) {
       return (<Redirect to={'/home'}/>)
     }
@@ -54,38 +51,74 @@ class Login extends Component {
       return (<Redirect to={'/home'}/>)
     }
 */
-     return (
-       <div className="container-fluid login-container" style={{backgroundImage: `url(${Background})`}}>
-       <div className="hero-brand-div"><a className="hero-brand" href="./" title="Home"><img className="hero-brand-resize" alt="DSOA Logo" src={Logo}/></a></div>
-    <div className="row">
-      <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <h1 className="web-name">
-            Weather Warning System
-          </h1>
-      <div className="card card-login my-5">
-      <div className="card-body">
-            <h5 className="card-title text-center">Log In</h5>
-            <form className="form-login">
-            <div className="form-label-group">
-                <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus/>
-                <label for="inputEmail">Email address</label>
-            </div>
-            <div className="form-label-group">
-                <input type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
-                <label for="inputPassword">Password</label>
-              </div>
+    return (
+      <div
+        className="container-fluid login-container"
+        style={{ backgroundImage: `url(${Background})` }}
+      >
+        <div className="hero-brand-div">
+          <a className="hero-brand" href="./" title="Home">
+            <img className="hero-brand-resize" alt="DSOA Logo" src={Logo} />
+          </a>
+        </div>
+        <div className="row">
+          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <h1 className="web-name">Weather Warning System</h1>
+            <div className="card card-login my-5">
+              <div className="card-body">
+                <h5 className="card-title text-center">Log In</h5>
+                <form className="form-login">
+                  <div className="form-label-group">
+                    <input
+                      name="username"
+                      type="text"
+                      id="inputUsername"
+                      className="form-control"
+                      placeholder="Username"
+                      pattern="[A-Za-z0-9]{1,20}"
+                      title="Username must only consist of letters and numbers"
+                      required
+                      autofocus
+                    />
+                    <label for="inputUsername">Username</label>
+                  </div>
+                  <div className="form-label-group">
+                    <input
+                      name="password"
+                      type="password"
+                      id="inputPassword"
+                      className="form-control"
+                      placeholder="Password"
+                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                      title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                      required
+                    />
+                    <label for="inputPassword">Password</label>
+                  </div>
 
-              <div className="custom-control custom-checkbox mb-3">
-                <input type="checkbox" className="custom-control-input" id="customCheck1"/>
-                <label className="custom-control-label" for="customCheck1">Remember password</label>
+                  <div className="custom-control custom-checkbox mb-3">
+                    <input
+                      type="checkbox"
+                      className="custom-control-input"
+                      id="customCheck1"
+                    />
+                    <label className="custom-control-label" for="customCheck1">
+                      Remember password
+                    </label>
+                  </div>
+                  <button
+                    className="btn btn-lg btn-success btn-block text-uppercase"
+                    type="submit"
+                  >
+                    Log in
+                  </button>
+                  <p className="text-center register-label"> Not yet registered? <a href="/signup" class="">Sign Up</a></p>
+                </form>
               </div>
-              <button className="btn btn-lg btn-success btn-block text-uppercase" type="submit">Log in</button>
-            </form>
+            </div>
           </div>
         </div>
       </div>
-  </div>
-  </div>
     );
   }
 }
