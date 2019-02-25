@@ -80,8 +80,8 @@ class Signup extends Component {
                       required
                       autoFocus
                     />
-                    <label for="inputWardenName">Full Name</label>
-                    <span class="note">
+                    <label htmlFor="inputWardenName">Full Name</label>
+                    <span className="note">
                       Note: It will be sufficient if only the first 2 names are
                       provided.
                     </span>
@@ -97,7 +97,7 @@ class Signup extends Component {
                       title="Username must only consist of letters and numbers"
                       required
                     />
-                    <label for="inputUsername">Username</label>
+                    <label htmlFor="inputUsername">Username</label>
                   </div>
                   <div className="form-label-group">
                     <input
@@ -110,7 +110,7 @@ class Signup extends Component {
                       title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                       required
                     />
-                    <label for="inputPassword">Password</label>
+                    <label htmlFor="inputPassword">Password</label>
                   </div>
                   <div className="form-label-group">
                     <input
@@ -123,8 +123,8 @@ class Signup extends Component {
                       title="Enter valid mobile number in this format: 05XXXXXXXX"
                       required
                     />
-                    <label for="inputContact">Mobile Number</label>
-                    <span class="note">Format: 0501234567</span>
+                    <label htmlFor="inputContact">Mobile Number</label>
+                    <span className="note">Format: 0501234567</span>
                   </div>
                   <div className="form-label-group">
                     <input
@@ -137,7 +137,7 @@ class Signup extends Component {
                       title="Contractor name can only be a combination of letters and/or numbers."
                       required
                     />
-                    <label for="inputContractorName">Contractor</label>
+                    <label htmlFor="inputContractorName">Contractor</label>
                   </div>
 
                   <div className="form-label-group">
@@ -150,7 +150,7 @@ class Signup extends Component {
                       title="Please type in the email address of the contractor"
                       required
                     />
-                    <label for="inputContractorEmail">Contractor Email</label>
+                    <label htmlFor="inputContractorEmail">Contractor Email</label>
                   </div>
 
                   <div className="form-label-group">
@@ -164,8 +164,8 @@ class Signup extends Component {
                       title="Enter valid mobile number in this format: 05XXXXXXXX or landline in this format: 0XXXXXXXX"
                       required
                     />
-                    <label for="inputContractorContact">Contractor Contact</label>
-                    <span class="note">Format: 0501234567 or 041234567</span>
+                    <label htmlFor="inputContractorContact">Contractor Contact</label>
+                    <span className="note">Format: 0501234567 or 041234567</span>
                   </div>
 
                   <div className="form-label-group">
@@ -179,12 +179,12 @@ class Signup extends Component {
                       title="Consultant name can only be a combination of letters and/or numbers."
                       required
                     />
-                    <label for="inputConsultantName">Consultant</label>
+                    <label htmlFor="inputConsultantName">Consultant</label>
                   </div>
 
                   <div className="form-label-group">
                     <div className="form-group">
-                      <label for="plot">
+                      <label htmlFor="plot">
                         Plot no you are currently assigned in:
                       </label>
                       <select className="form-control" id="plot">
@@ -203,7 +203,7 @@ class Signup extends Component {
                   </button>
                   <p className="text-center login-label">
                     Already registered?{" "}
-                    <a href="/login" class="">
+                    <a href="/login">
                       Log In
                     </a>
                   </p>

@@ -80,7 +80,7 @@ class Login extends Component {
                       required
                       autoFocus
                     />
-                    <label for="inputUsername">Username</label>
+                    <label htmlFor="inputUsername">Username</label>
                   </div>
                   <div className="form-label-group">
                     <input
@@ -93,7 +93,7 @@ class Login extends Component {
                       title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                       required
                     />
-                    <label for="inputPassword">Password</label>
+                    <label htmlFor="inputPassword">Password</label>
                   </div>
 
                   <div className="custom-control custom-checkbox mb-3">
@@ -102,7 +102,7 @@ class Login extends Component {
                       className="custom-control-input"
                       id="customCheck1"
                     />
-                    <label className="custom-control-label" for="customCheck1">
+                    <label className="custom-control-label" htmlFor="customCheck1">
                       Remember password
                     </label>
                   </div>

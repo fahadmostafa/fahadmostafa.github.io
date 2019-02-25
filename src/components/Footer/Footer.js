@@ -6,9 +6,9 @@ class Footer extends Component {
   render() {
     return (
       <footer>
-        <div>
-          
-        </div>
+          <p>
+          &#xA9; 2019 Weather Warning System, DSOA.
+          </p>
       </footer>
     );
   }
