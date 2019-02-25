@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 //import {PostData} from '../../services/PostData';
-import {Redirect} from 'react-router-dom';
-import './Signup.css';
+//import {Redirect} from 'react-router-dom';
+import "./Signup.css";
+import Logo from "../../images/dsoa-logo-white.png";
+import Background from "../../images/login-bg.jpg";
 
 class Signup extends Component {
-/*
+  /*
   constructor(props){
     super(props);
    
@@ -35,8 +37,8 @@ class Signup extends Component {
     }
   } */
 
- onChange(e){
-   this.setState({[e.target.name]:e.target.value});
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -45,26 +47,171 @@ class Signup extends Component {
       return (<Redirect to={'/home'}/>)
     }
    */
-  
 
     return (
-      
-      <div className="row " id="Body">
-        <div className="medium-5 columns left">
-        <h4>Signup</h4>
-        <label>Email</label>
-        <input type="text" name="email"  placeholder="Email" onChange={this.onChange}/>
-        <label>Name</label>
-        <input type="text" name="name"  placeholder="Name" onChange={this.onChange}/>
-        <label>Username</label>
-        <input type="text" name="username" placeholder="Username" onChange={this.onChange}/>
-        <label>Password</label>
-        <input type="password" name="password"  placeholder="Password" onChange={this.onChange}/>
-        
-        <input type="submit" className="button" value="Sign Up" onClick={this.signup}/>
-        <a href="/login">Login</a>
+      <div
+        className="container-fluid signup-container"
+        style={{ backgroundImage: `url(${Background})` }}
+      >
+        <div className="hero-brand-div">
+          <a className="hero-brand" href="./" title="Home">
+            <img className="hero-brand-resize" alt="DSOA Logo" src={Logo} />
+          </a>
         </div>
-        
+        <div className="row">
+          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <h1 className="web-name">Weather Warning System</h1>
+            <div className="card card-signup my-5">
+              <div className="card-body">
+                <h5 className="card-title text-center">Sign Up</h5>
+                <p className="text-center text-warning">
+                  Note: Please fill the form with the correct details!
+                </p>
+                <form className="form-signup">
+                  <div className="form-label-group">
+                    <input
+                      name="wardenName"
+                      className="form-control"
+                      id="inputWardenName"
+                      placeHolder="Full Name"
+                      type="text"
+                      pattern="[A-Za-z ]{1,50}"
+                      title="Name can only be in letters."
+                      required
+                      autoFocus
+                    />
+                    <label for="inputWardenName">Full Name</label>
+                    <span class="note">
+                      Note: It will be sufficient if only the first 2 names are
+                      provided.
+                    </span>
+                  </div>
+                  <div className="form-label-group">
+                    <input
+                      name="username"
+                      type="text"
+                      id="inputUsername"
+                      className="form-control"
+                      placeHolder="Username"
+                      pattern="[A-Za-z0-9]{1,20}"
+                      title="Username must only consist of letters and numbers"
+                      required
+                    />
+                    <label for="inputUsername">Username</label>
+                  </div>
+                  <div className="form-label-group">
+                    <input
+                      name="password"
+                      type="password"
+                      id="inputPassword"
+                      className="form-control"
+                      placeHolder="Password"
+                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                      title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                      required
+                    />
+                    <label for="inputPassword">Password</label>
+                  </div>
+                  <div className="form-label-group">
+                    <input
+                      name="contact"
+                      type="tel"
+                      id="inputContact"
+                      className="form-control"
+                      placeHolder="Mobile Number"
+                      pattern="[0]{1}[5]{1}[0,5,6,8,4,2]{1}[0-9]{7}"
+                      title="Enter valid mobile number in this format: 05XXXXXXXX"
+                      required
+                    />
+                    <label for="inputContact">Mobile Number</label>
+                    <span class="note">Format: 0501234567</span>
+                  </div>
+                  <div className="form-label-group">
+                    <input
+                      name="contractorName"
+                      className="form-control"
+                      id="inputContractorName"
+                      placeHolder="Contractor"
+                      type="text"
+                      pattern="[A-Za-z0-9 ]{1,60}"
+                      title="Contractor name can only be a combination of letters and/or numbers."
+                      required
+                    />
+                    <label for="inputContractorName">Contractor</label>
+                  </div>
+
+                  <div className="form-label-group">
+                    <input
+                      name="contractorEmail"
+                      className="form-control"
+                      id="inputContractorEmail"
+                      placeHolder="Contractor Email"
+                      type="email"
+                      title="Please type in the email address of the contractor"
+                      required
+                    />
+                    <label for="inputContractorEmail">Contractor Email</label>
+                  </div>
+
+                  <div className="form-label-group">
+                    <input
+                      name="contractorContact"
+                      type="tel"
+                      id="inputContractorContact"
+                      className="form-control"
+                      placeHolder="Contractor Contact"
+                      pattern="[0]{1}[0,5,6,8,4,2]{1,2}[0-9]{7}"
+                      title="Enter valid mobile number in this format: 05XXXXXXXX or landline in this format: 0XXXXXXXX"
+                      required
+                    />
+                    <label for="inputContractorContact">Contractor Contact</label>
+                    <span class="note">Format: 0501234567 or 041234567</span>
+                  </div>
+
+                  <div className="form-label-group">
+                    <input
+                      name="consultantName"
+                      className="form-control"
+                      id="inputConsultantName"
+                      placeHolder="Consultant"
+                      type="text"
+                      pattern="[A-Za-z0-9 ]{1,60}"
+                      title="Consultant name can only be a combination of letters and/or numbers."
+                      required
+                    />
+                    <label for="inputConsultantName">Consultant</label>
+                  </div>
+
+                  <div className="form-label-group">
+                    <div className="form-group">
+                      <label for="plot">
+                        Plot no you are currently assigned in:
+                      </label>
+                      <select className="form-control" id="plot">
+                        <option>04-003</option>
+                        <option>06-020</option>
+                        <option>10-001</option>
+                        <option>10-003</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button
+                    className="btn btn-lg btn-danger btn-block text-uppercase"
+                    type="submit"
+                  >
+                    Sign Up
+                  </button>
+                  <p className="text-center login-label">
+                    Already registered?{" "}
+                    <a href="/login" class="">
+                      Log In
+                    </a>
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

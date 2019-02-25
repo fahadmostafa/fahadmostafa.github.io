@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Background from "../../images/login-bg.jpg";
 //import {Redirect} from 'react-router-dom';
 //import {PostData} from '../../services/PostData';
 import "./Login.css";
 import Logo from "../../images/dsoa-logo-white.png";
+import Background from "../../images/login-bg.jpg";
 
 class Login extends Component {
   /*
@@ -78,7 +78,7 @@ class Login extends Component {
                       pattern="[A-Za-z0-9]{1,20}"
                       title="Username must only consist of letters and numbers"
                       required
-                      autofocus
+                      autoFocus
                     />
                     <label for="inputUsername">Username</label>
                   </div>
@@ -112,7 +112,9 @@ class Login extends Component {
                   >
                     Log in
                   </button>
-                  <p className="text-center register-label"> Not yet registered? <a href="/signup" class="">Sign Up</a></p>
+                  <p className="text-center register-label">
+                    Not yet registered? <a href="/signup">Sign Up</a>
+                  </p>
                 </form>
               </div>
             </div>
