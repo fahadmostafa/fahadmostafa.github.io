@@ -3,7 +3,6 @@ import React, { Component } from "react";
 //import {Redirect} from 'react-router-dom';
 import "./Signup.css";
 import Logo from "../../images/dsoa-logo-white.png";
-import Background from "../../images/login-bg.jpg";
 
 class Signup extends Component {
   /*
@@ -51,7 +50,6 @@ class Signup extends Component {
     return (
       <div
         className="container-fluid signup-container"
-        style={{ backgroundImage: `url(${Background})` }}
       >
         <div className="hero-brand-div">
           <a className="hero-brand" href="./" title="Home">
@@ -212,6 +210,11 @@ class Signup extends Component {
             </div>
           </div>
         </div>
+        <footer>
+      <p>
+      &#xA9; 2019 Weather Warning System, DSOA.
+      </p>
+      </footer>
       </div>
     );
   }

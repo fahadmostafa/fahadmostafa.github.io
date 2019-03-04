@@ -3,7 +3,7 @@ import React, { Component } from "react";
 //import {PostData} from '../../services/PostData';
 import "./Login.css";
 import Logo from "../../images/dsoa-logo-white.png";
-import Background from "../../images/login-bg.jpg";
+//import Background from "../../images/login-bg.jpg";
 
 class Login extends Component {
   /*
@@ -54,7 +54,7 @@ class Login extends Component {
     return (
       <div
         className="container-fluid login-container"
-        style={{ backgroundImage: `url(${Background})` }}
+        
       >
         <div className="hero-brand-div">
           <a className="hero-brand" href="./" title="Home">
@@ -120,6 +120,11 @@ class Login extends Component {
             </div>
           </div>
         </div>
+        <footer>
+      <p>
+      &#xA9; 2019 Weather Warning System, DSOA.
+      </p>
+      </footer>
       </div>
     );
   }

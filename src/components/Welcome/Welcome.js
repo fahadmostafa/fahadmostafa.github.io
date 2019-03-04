@@ -14,6 +14,7 @@ class Welcome extends Component {
 
   render() {
     return (
+      <div>
       <div className="hero" style={{backgroundImage: `url(${Background})`}}>
     <div className="container text-center">
       <div className="row">
@@ -40,7 +41,12 @@ class Welcome extends Component {
 		  </div>
       </div>
     </div>
-
+    </div>
+    <footer>
+      <p>
+      &#xA9; 2019 Weather Warning System, DSOA.
+      </p>
+      </footer>
   </div>
     );
   }

@@ -3,8 +3,6 @@ import "./App.css";
 import "./styles/custom.css";
 import Routes from "./routes";
 
-import Footer from "./components/Footer/Footer";
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +15,6 @@ class App extends Component {
       <div className="main-contain">
         
           <Routes name={this.state.appName} />
-          <Footer />
         
       </div>
     );
