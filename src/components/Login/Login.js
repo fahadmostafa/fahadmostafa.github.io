@@ -67,6 +67,9 @@ class Login extends Component {
             <div className="card card-login my-5">
               <div className="card-body">
                 <h5 className="card-title text-center">Log In</h5>
+                <p className="text-center text-danger">
+                  Note: Do not log out unless there is a change in shift. In that case, the next person must log in.
+                </p>
                 <form className="form-login">
                   <div className="form-label-group">
                     <input
