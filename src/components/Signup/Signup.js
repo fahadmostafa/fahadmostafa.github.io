@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-//import {PostData} from '../../services/PostData';
-//import {Redirect} from 'react-router-dom';
+import {PostData} from '../../services/PostData';
+import {Redirect} from 'react-router-dom';
 import "./Signup.css";
 import Logo from "../../images/dsoa-logo-white.png";
 
 class Signup extends Component {
-  /*
+  
   constructor(props){
     super(props);
    
@@ -34,18 +34,18 @@ class Signup extends Component {
       
      });
     }
-  } */
+  } 
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
-    /*
+    
     if (this.state.redirectToReferrer || sessionStorage.getItem('userData')) {
       return (<Redirect to={'/home'}/>)
     }
-   */
+   
 
     return (
       <div
@@ -71,7 +71,7 @@ class Signup extends Component {
                       name="wardenName"
                       className="form-control"
                       id="inputWardenName"
-                      placeHolder="Full Name"
+                      placeholder="Full Name"
                       type="text"
                       pattern="[A-Za-z ]{1,50}"
                       title="Name can only be in letters."
@@ -90,7 +90,7 @@ class Signup extends Component {
                       type="text"
                       id="inputUsername"
                       className="form-control"
-                      placeHolder="Username"
+                      placeholder="Username"
                       pattern="[A-Za-z0-9]{1,20}"
                       title="Username must only consist of letters and numbers"
                       required
@@ -103,7 +103,7 @@ class Signup extends Component {
                       type="password"
                       id="inputPassword"
                       className="form-control"
-                      placeHolder="Password"
+                      placeholder="Password"
                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                       title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                       required
@@ -116,7 +116,7 @@ class Signup extends Component {
                       type="tel"
                       id="inputContact"
                       className="form-control"
-                      placeHolder="Mobile Number"
+                      placeholder="Mobile Number"
                       pattern="[0]{1}[5]{1}[0,5,6,8,4,2]{1}[0-9]{7}"
                       title="Enter valid mobile number in this format: 05XXXXXXXX"
                       required
@@ -129,7 +129,7 @@ class Signup extends Component {
                       name="contractorName"
                       className="form-control"
                       id="inputContractorName"
-                      placeHolder="Contractor"
+                      placeholder="Contractor"
                       type="text"
                       pattern="[A-Za-z0-9 ]{1,60}"
                       title="Contractor name can only be a combination of letters and/or numbers."
@@ -143,7 +143,7 @@ class Signup extends Component {
                       name="contractorEmail"
                       className="form-control"
                       id="inputContractorEmail"
-                      placeHolder="Contractor Email"
+                      placeholder="Contractor Email"
                       type="email"
                       title="Please type in the email address of the contractor"
                       required
@@ -157,7 +157,7 @@ class Signup extends Component {
                       type="tel"
                       id="inputContractorContact"
                       className="form-control"
-                      placeHolder="Contractor Contact"
+                      placeholder="Contractor Contact"
                       pattern="[0]{1}[0,5,6,8,4,2]{1,2}[0-9]{7}"
                       title="Enter valid mobile number in this format: 05XXXXXXXX or landline in this format: 0XXXXXXXX"
                       required
@@ -171,7 +171,7 @@ class Signup extends Component {
                       name="consultantName"
                       className="form-control"
                       id="inputConsultantName"
-                      placeHolder="Consultant"
+                      placeholder="Consultant"
                       type="text"
                       pattern="[A-Za-z0-9 ]{1,60}"
                       title="Consultant name can only be a combination of letters and/or numbers."

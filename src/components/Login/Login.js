@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-//import {Redirect} from 'react-router-dom';
-//import {PostData} from '../../services/PostData';
+import {Redirect} from 'react-router-dom';
+import {PostData} from '../../services/PostData';
 import "./Login.css";
 import Logo from "../../images/dsoa-logo-white.png";
 //import Background from "../../images/login-bg.jpg";
 
 class Login extends Component {
-  /*
+
   constructor(){
     super();
    
@@ -21,7 +21,6 @@ class Login extends Component {
 
   }
 
-  
 
   login() {
     if(this.state.username && this.state.password){
@@ -35,14 +34,13 @@ class Login extends Component {
       });
     }
     
-  } */
+  }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
-    /*
      if (this.state.redirectToReferrer) {
       return (<Redirect to={'/home'}/>)
     }
@@ -50,7 +48,6 @@ class Login extends Component {
     if(sessionStorage.getItem('userData')){
       return (<Redirect to={'/home'}/>)
     }
-*/
     return (
       <div
         className="container-fluid login-container"
