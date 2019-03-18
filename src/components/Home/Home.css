@@ -1,0 +1,133 @@
+@import url(//db.onlinewebfonts.com/c/ca95c48955899f16fc852f1a8fe30b87?family=KGHAPPYSolidW00-Regular);
+
+.back {
+  background-color: rgba(226, 226, 226, 0.719);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.home-brand:hover {
+  opacity: 0.75;
+}
+
+.home-brand-resize {
+  width: 180px;
+}
+
+.home-brand-div {
+  padding-top: 20px;
+}
+
+.home-title-div {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.home-title {
+  font-family: "Raleway", sans-serif;
+  font-size: 4vmin;
+}
+
+.plot-btn-div {
+  text-align: right;
+  padding-top: 20px;
+}
+
+.log-out-btn {
+  margin-left: 10px;
+}
+
+.warnings-label-box {
+  text-align: center;
+}
+
+.warnings-label {
+  font-family: "KGHAPPYSolidW00-Regular";
+  font-size: 2vh;
+  color: rgba(255, 0, 0, 0.801);
+  margin-top: 50px;
+}
+
+.box-contain-warnings {
+  text-align: center;
+}
+
+.content-box {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.warning-box,
+.alert-box,
+.no-warning-box {
+  border: 2px solid black;
+  border-radius: 8px;
+  margin-top: 20px;
+  background-color: white;
+}
+
+.img-warning,
+.img-alert,
+.img-no-warning {
+  width: 19vw;
+  height: 26vh;
+}
+
+.weather-type {
+  width: 10vw;
+  height: 12vh;
+}
+
+.warning-description, .alert-description, .no-warning-description {
+  font-size: 2vh;
+}
+.ack-box {
+  text-align: center;
+  position: inherit;
+}
+
+.ack-text {
+  margin-top: 10px;
+}
+
+.ack-btn {
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  /* Styles */
+  .home-brand-div {
+    text-align: center;
+  }
+
+  .plot-btn-div {
+    text-align: center;
+  }
+
+  .home-brand-resize {
+    width: 130px;
+  }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width: 321px) {
+  /* Styles */
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width: 320px) {
+  /* Styles */
+  .home-brand-div {
+    text-align: center;
+  }
+
+  .plot-btn-div {
+    text-align: center;
+  }
+
+  .home-brand-resize {
+    width: 130px;
+  }
+}

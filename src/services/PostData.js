@@ -1,6 +1,6 @@
 export function PostData(type, userData) {
 
-    let BaseURL = 'http://localhost:3000/api/';
+    let BaseURL = 'http://localhost/api/';
 
     return new Promise((resolve, reject) =>{
     

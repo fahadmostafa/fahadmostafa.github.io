@@ -21,7 +21,7 @@ class Welcome extends Component {
   }
 
   onClickAdminLogin() {
-    window.location.href = "/admin_login";
+    window.location.href = "/adminlogin";
   }
 
   render() {
@@ -62,7 +62,7 @@ class Welcome extends Component {
               </div>
               
             </div>
-            <button type="button" className="btn btn-lg btn-primary btn-admin">Admin</button>
+            <button type="button" onClick={this.onClickAdminLogin} className="btn btn-sm btn-secondary btn-admin">Admin</button>
           </div>
         </div>
       </div>

@@ -1,56 +1,63 @@
 import React, { Component } from "react";
-import {PostData} from '../../services/PostData';
-import {Redirect} from 'react-router-dom';
+import { PostData } from "../../services/PostData";
+import { Redirect } from "react-router-dom";
 import "./Signup.css";
 import Logo from "../../images/dsoa-logo-white.png";
 
 class Signup extends Component {
-  
-  constructor(props){
+  constructor(props) {
     super(props);
-   
+
     this.state = {
-     username: '',
-     password: '',
-     email: '',
-     name: '',
-     redirectToReferrer: false
+      wardenName: "",
+      username: "",
+      password: "",
+      contact: "",
+      contractorName: "",
+      contractorEmail: "",
+      contractorContact: "",
+      consultantName: "",
+      plotNo: "",
+      redirectToReferrer: false
     };
 
     this.signup = this.signup.bind(this);
     this.onChange = this.onChange.bind(this);
-
   }
- 
 
   signup() {
-    if(this.state.username && this.state.password && this.state.email && this.state.name){
-    PostData('signup',this.state).then((result) => {
-      let responseJson = result;
-      if(responseJson.userData){         
-        sessionStorage.setItem('userData',JSON.stringify(responseJson));
-        this.setState({redirectToReferrer: true});
-      }
-      
-     });
+    if (
+      this.state.wardenName &&
+      this.state.username &&
+      this.state.password &&
+      this.state.contact &&
+      this.state.contractorName &&
+      this.state.contractorEmail &&
+      this.state.contractorContact &&
+      this.state.consultantName &&
+      this.state.plotNo
+    ) {
+      PostData("signup", this.state).then(result => {
+        let responseJson = result;
+        if (responseJson.userData) {
+          sessionStorage.setItem("userData", JSON.stringify(responseJson));
+          this.setState({ redirectToReferrer: true });
+        }
+      });
     }
-  } 
+  }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
-    
-    if (this.state.redirectToReferrer || sessionStorage.getItem('userData')) {
-      return (<Redirect to={'/home'}/>)
+    if (this.state.redirectToReferrer || sessionStorage.getItem("userData")) {
+      return <Redirect to={"/home"} />;
     }
-   
 
     return (
-      <div
-        className="container-fluid signup-container"
-      >
+      <div className="container-fluid signup-container">
         <div className="hero-brand-div">
           <a className="hero-brand" href="./" title="Home">
             <img className="hero-brand-resize" alt="DSOA Logo" src={Logo} />
@@ -69,6 +76,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="wardenName"
+                      onChange={this.onChange}
                       className="form-control"
                       id="inputWardenName"
                       placeholder="Full Name"
@@ -87,6 +95,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="username"
+                      onChange={this.onChange}
                       type="text"
                       id="inputUsername"
                       className="form-control"
@@ -100,6 +109,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="password"
+                      onChange={this.onChange}
                       type="password"
                       id="inputPassword"
                       className="form-control"
@@ -113,6 +123,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="contact"
+                      onChange={this.onChange}
                       type="tel"
                       id="inputContact"
                       className="form-control"
@@ -127,6 +138,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="contractorName"
+                      onChange={this.onChange}
                       className="form-control"
                       id="inputContractorName"
                       placeholder="Contractor"
@@ -141,6 +153,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="contractorEmail"
+                      onChange={this.onChange}
                       className="form-control"
                       id="inputContractorEmail"
                       placeholder="Contractor Email"
@@ -148,12 +161,15 @@ class Signup extends Component {
                       title="Please type in the email address of the contractor"
                       required
                     />
-                    <label htmlFor="inputContractorEmail">Contractor Email</label>
+                    <label htmlFor="inputContractorEmail">
+                      Contractor Email
+                    </label>
                   </div>
 
                   <div className="form-label-group">
                     <input
                       name="contractorContact"
+                      onChange={this.onChange}
                       type="tel"
                       id="inputContractorContact"
                       className="form-control"
@@ -162,13 +178,18 @@ class Signup extends Component {
                       title="Enter valid mobile number in this format: 05XXXXXXXX or landline in this format: 0XXXXXXXX"
                       required
                     />
-                    <label htmlFor="inputContractorContact">Contractor Contact</label>
-                    <span className="note">Format: 0501234567 or 041234567</span>
+                    <label htmlFor="inputContractorContact">
+                      Contractor Contact
+                    </label>
+                    <span className="note">
+                      Format: 0501234567 or 041234567
+                    </span>
                   </div>
 
                   <div className="form-label-group">
                     <input
                       name="consultantName"
+                      onChange={this.onChange}
                       className="form-control"
                       id="inputConsultantName"
                       placeholder="Consultant"
@@ -185,7 +206,7 @@ class Signup extends Component {
                       <label htmlFor="plot">
                         Plot no you are currently assigned in:
                       </label>
-                      <select className="form-control" id="plot">
+                      <select className="form-control" id="plot" name="plotNo" onChange={this.onChange}>
                         <option>04-003</option>
                         <option>06-020</option>
                         <option>10-001</option>
@@ -196,14 +217,12 @@ class Signup extends Component {
                   <button
                     className="btn btn-lg btn-danger btn-block text-uppercase"
                     type="submit"
+                    onClick={this.signup}
                   >
                     Sign Up
                   </button>
                   <p className="text-center login-label">
-                    Already registered?{" "}
-                    <a href="/login">
-                      Log In
-                    </a>
+                    Already registered? <a href="/login">Log In</a>
                   </p>
                 </form>
               </div>
@@ -211,10 +230,8 @@ class Signup extends Component {
           </div>
         </div>
         <footer>
-      <p>
-      &#xA9; 2019 Weather Warning System, DSOA.
-      </p>
-      </footer>
+          <p>&#xA9; 2019 Weather Warning System, DSOA.</p>
+        </footer>
       </div>
     );
   }

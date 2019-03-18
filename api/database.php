@@ -1,5 +1,5 @@
 <?php
- 
+ class Database {
     // database credentials
     private $host = "localhost";
     private $db_name = "weather_warning_system";
@@ -15,10 +15,12 @@
         try{
             $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
             $this->conn->exec("set names utf8");
+            echo "Connected successfully"
         }catch(PDOException $exception){
             echo "Connection error: " . $exception->getMessage();
         }
  
         return $this->conn;
     }
+}
 ?>

@@ -1,4 +1,8 @@
 <?php
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+
 require 'database.php';
 require 'Slim/Slim.php';
 
@@ -7,9 +11,6 @@ $app = new \Slim\Slim();
 
 $app->post('/login','login'); /* User login */
 $app->post('/signup','signup'); /* User Signup */
-$app->post('/feed','feed'); /* User Feeds */
-$app->post('/feedUpdate','feedUpdate'); /* User Feeds */
-$app->post('/feedDelete','feedDelete'); /* User Feeds */
 //$app->post('/userDetails','userDetails'); /* User Details */
 
 $app->run();
@@ -20,9 +21,10 @@ function login() {
     $request = \Slim\Slim::getInstance()->request();
     $data = json_decode($request->getBody());
     try {
-       $db = getDB();
+          $database = new Database();
+       $db = $database->getConnection();
        $userData ='';
-       $sql = "SELECT user_id, name, email, username FROM users WHERE (username=:username or email=:username) and password=:password ";
+       $sql = "SELECT warden_username FROM warden WHERE username=:warden_username and password=:password";
       $stmt = $db->prepare($sql);
       $stmt->bindParam("username", $data->username, PDO::PARAM_STR);
       $password=hash('sha256',$data->password);

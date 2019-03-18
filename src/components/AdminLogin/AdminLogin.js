@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { PostData } from "../../services/PostData";
-import "./Login.css";
+import "./AdminLogin.css";
 import Logo from "../../images/dsoa-logo-white.png";
 
-class Login extends Component {
+class AdminLogin extends Component {
   constructor() {
     super();
 
@@ -20,14 +20,10 @@ class Login extends Component {
 
   login() {
     if (this.state.username && this.state.password) {
-      console.log("reached here!");
       PostData("login", this.state).then(result => {
-        let responseJson = result;
-        console.log("Result: " + result);
-        if (responseJson.userData) {
-          sessionStorage.setItem("userData", JSON.stringify(responseJson));
-          console.log("JSON string: " + JSON.stringify(responseJson));
-          console.log("session store: " + sessionStorage);
+        let responseJSON = result;
+        if (responseJSON.userData) {
+          sessionStorage.setItem("userData", JSON.stringify(responseJSON));
           this.setState({ redirectToReferrer: true });
         }
       });
@@ -36,7 +32,6 @@ class Login extends Component {
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    console.log({[e.target.name]: e.target.value});
   }
 
   render() {
@@ -47,6 +42,7 @@ class Login extends Component {
     if (sessionStorage.getItem("userData")) {
       return <Redirect to={"/home"} />;
     }
+
     return (
       <div className="container-fluid login-container">
         <div className="hero-brand-div">
@@ -59,12 +55,10 @@ class Login extends Component {
             <h1 className="web-name">Weather Warning System</h1>
             <div className="card card-login my-5">
               <div className="card-body">
-                <h5 className="card-title text-center">Log In</h5>
-                <p className="text-center text-danger">
-                  Note: Do not log out unless there is a change in shift. In
-                  that case, the next person must log in.
-                </p>
-                
+                <h5 className="card-title text-center">
+                  Log In - <strong>Admin</strong>
+                </h5>
+                <form className="form-login">
                   <div className="form-label-group">
                     <input
                       name="username"
@@ -115,10 +109,7 @@ class Login extends Component {
                   >
                     Log in
                   </button>
-                  <p className="text-center register-label">
-                    Not yet registered? <a href="/signup">Sign Up</a>
-                  </p>
-                
+                </form>
               </div>
             </div>
           </div>
@@ -131,4 +122,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default AdminLogin;
