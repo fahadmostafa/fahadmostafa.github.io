@@ -1,11 +1,11 @@
 export function PostData(type, userData) {
 
-    let BaseURL = 'http://localhost/api/';
+    let BaseURL = 'http://localhost/react-php/api/users.php';
 
     return new Promise((resolve, reject) =>{
     
          
-        fetch(BaseURL+type, {
+        fetch(BaseURL+'?tp='+type, {
             method: 'POST',
             body: JSON.stringify(userData)
           })

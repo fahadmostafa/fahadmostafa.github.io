@@ -1,54 +1,32 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Origin: http://localhost:3000");
 
-require 'database.php';
-require 'Slim/Slim.php';
 
-\Slim\Slim::registerAutoloader();
-$app = new \Slim\Slim();
-
-$app->post('/login','login'); /* User login */
-$app->post('/signup','signup'); /* User Signup */
-//$app->post('/userDetails','userDetails'); /* User Details */
-
-$app->run();
+$type = $_GET['tp'];
+if($type=='signup') signup();
+elseif($type=='login') login();
 
 /************************* USER LOGIN *************************************/
 /* ### User login ### */
 function login() {
-    $request = \Slim\Slim::getInstance()->request();
-    $data = json_decode($request->getBody());
-    try {
-          $database = new Database();
-       $db = $database->getConnection();
-       $userData ='';
-       $sql = "SELECT warden_username FROM warden WHERE username=:warden_username and password=:password";
-      $stmt = $db->prepare($sql);
-      $stmt->bindParam("username", $data->username, PDO::PARAM_STR);
-      $password=hash('sha256',$data->password);
-      $stmt->bindParam("password", $password, PDO::PARAM_STR);
-      $stmt->execute();
-      $mainCount=$stmt->rowCount();
-      $userData = $stmt->fetch(PDO::FETCH_OBJ);
-if(!empty($userData))
-{
-     $user_id=$userData->user_id;
-     $userData->token = apiToken($user_id);
-}
-    $db = null;
-if($userData){
-   $userData = json_encode($userData);
-   echo '{"userData": ' .$userData . '}';
-} else {
-   echo '{"error":{"text":"Bad request wrong username and password"}}';
-}
+      require('database.php');
+    
+      $json = json_decode(file_get_contents('php://input'), true);
+      $username = $json['username']; $password = $json['password'];
+      $userData = ''; $query = "select * from warden where warden_username='$username' and password='$password'";
+      $result= $db->query($query);
+      $rowCount=$result->num_rows;
 
-}
-catch(PDOException $e) {
-echo '{"error":{"text":'. $e->getMessage() .'}}';
-}
+      if($rowCount > 0){
+            $userData = $result->fetch_object();
+            $user_id = $userData->user_id;
+            $userData = json_encode($userData);
+            echo '{"userData":'.$userData.'}';
+      }
+      else {
+            echo '{"error":"Wrong username or password"}';
+      }
 }
 
 

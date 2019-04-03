@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { PostData } from "../../services/PostData";
+import { signup } from "../userFunctions";
 import { Redirect } from "react-router-dom";
 import "./Signup.css";
 import Logo from "../../images/dsoa-logo-white.png";
 
 class Signup extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       wardenName: "",
@@ -18,14 +18,15 @@ class Signup extends Component {
       contractorContact: "",
       consultantName: "",
       plotNo: "",
+      errors: {},
       redirectToReferrer: false
     };
 
-    this.signup = this.signup.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
-  signup() {
+  onSubmit(e) {
     if (
       this.state.wardenName &&
       this.state.username &&
@@ -37,11 +38,25 @@ class Signup extends Component {
       this.state.consultantName &&
       this.state.plotNo
     ) {
-      PostData("signup", this.state).then(result => {
-        let responseJson = result;
-        if (responseJson.userData) {
-          sessionStorage.setItem("userData", JSON.stringify(responseJson));
-          this.setState({ redirectToReferrer: true });
+      e.preventDefault();
+
+      const newUser = {
+        wardenName: this.state.wardenName,
+        username: this.state.username,
+        password: this.state.password,
+        contact: this.state.contact,
+        contractorName: this.state.contractorName,
+        contractorEmail: this.state.contractorEmail,
+        contractorContact: this.state.contractorContact,
+        consultantName: this.state.consultantName,
+        plotNo: this.state.plotNo
+      };
+
+      signup(newUser).then(res => {
+        if (res.error) {
+          window.alert("Username already taken");
+        } else {
+          this.props.history.push(`/login`);
         }
       });
     }
@@ -52,8 +67,12 @@ class Signup extends Component {
   }
 
   render() {
-    if (this.state.redirectToReferrer || sessionStorage.getItem("userData")) {
+    if (this.state.redirectToReferrer || localStorage.getItem("usertoken")) {
       return <Redirect to={"/home"} />;
+    }
+
+    if (localStorage.getItem("admintoken")) {
+      return <Redirect to={"/adminhome"} />;
     }
 
     return (
@@ -72,10 +91,11 @@ class Signup extends Component {
                 <p className="text-center text-warning">
                   Note: Please fill the form with the correct details!
                 </p>
-                <form className="form-signup">
+                <form className="form-signup" onSubmit={this.onSubmit}>
                   <div className="form-label-group">
                     <input
                       name="wardenName"
+                      value={this.state.wardenName}
                       onChange={this.onChange}
                       className="form-control"
                       id="inputWardenName"
@@ -95,6 +115,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="username"
+                      value={this.state.username}
                       onChange={this.onChange}
                       type="text"
                       id="inputUsername"
@@ -109,6 +130,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="password"
+                      value={this.state.password}
                       onChange={this.onChange}
                       type="password"
                       id="inputPassword"
@@ -123,6 +145,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="contact"
+                      value={this.state.contact}
                       onChange={this.onChange}
                       type="tel"
                       id="inputContact"
@@ -138,6 +161,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="contractorName"
+                      value={this.state.contractorName}
                       onChange={this.onChange}
                       className="form-control"
                       id="inputContractorName"
@@ -153,6 +177,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="contractorEmail"
+                      value={this.state.contractorEmail}
                       onChange={this.onChange}
                       className="form-control"
                       id="inputContractorEmail"
@@ -169,13 +194,14 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="contractorContact"
+                      value={this.state.contractorContact}
                       onChange={this.onChange}
                       type="tel"
                       id="inputContractorContact"
                       className="form-control"
                       placeholder="Contractor Contact"
-                      pattern="[0]{1}[0,5,6,8,4,2]{1,2}[0-9]{7}"
-                      title="Enter valid mobile number in this format: 05XXXXXXXX or landline in this format: 0XXXXXXXX"
+                      pattern="[0]{1}[5,4]{1}[0,5,6,8,4,2]{0,1}[0-9]{7}"
+                      title="Enter valid mobile number in this format: 05XXXXXXXX or landline in this format: 04XXXXXXX"
                       required
                     />
                     <label htmlFor="inputContractorContact">
@@ -189,6 +215,7 @@ class Signup extends Component {
                   <div className="form-label-group">
                     <input
                       name="consultantName"
+                      value={this.state.consultantName}
                       onChange={this.onChange}
                       className="form-control"
                       id="inputConsultantName"
@@ -206,7 +233,15 @@ class Signup extends Component {
                       <label htmlFor="plot">
                         Plot no you are currently assigned in:
                       </label>
-                      <select className="form-control" id="plot" name="plotNo" onChange={this.onChange}>
+                      <select
+                        className="form-control"
+                        id="plot"
+                        name="plotNo"
+                        value={this.state.plotNo}
+                        onChange={this.onChange}
+                        required
+                      >
+                        <option />
                         <option>04-003</option>
                         <option>06-020</option>
                         <option>10-001</option>
@@ -214,13 +249,11 @@ class Signup extends Component {
                       </select>
                     </div>
                   </div>
-                  <button
-                    className="btn btn-lg btn-danger btn-block text-uppercase"
+                  <input
                     type="submit"
-                    onClick={this.signup}
-                  >
-                    Sign Up
-                  </button>
+                    value="Sign Up"
+                    className="btn btn-lg btn-danger btn-block text-uppercase"
+                  />
                   <p className="text-center login-label">
                     Already registered? <a href="/login">Log In</a>
                   </p>

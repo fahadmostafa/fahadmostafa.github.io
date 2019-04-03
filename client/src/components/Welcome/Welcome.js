@@ -4,7 +4,6 @@ import Logo from "../../images/dsoa_logo.png";
 import "./Welcome.css";
 
 class Welcome extends Component {
-
   constructor(props) {
     super(props);
 
@@ -60,9 +59,18 @@ class Welcome extends Component {
                   Signup
                 </button>
               </div>
-              
             </div>
-            <button type="button" onClick={this.onClickAdminLogin} className="btn btn-sm btn-secondary btn-admin">Admin</button>
+            <button
+              type="button"
+              onClick={this.onClickAdminLogin}
+              className="btn btn-sm btn-secondary btn-admin"
+            >
+              S&E Officer Log In
+            </button>
+            <p className="text-danger">
+              Only use the officer login if you are a DSOA official and have the
+              credentials
+            </p>
           </div>
         </div>
       </div>

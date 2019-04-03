@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { PostData } from "../../services/PostData";
+import { login } from "../userFunctions";
 import "./Login.css";
 import Logo from "../../images/dsoa-logo-white.png";
 
@@ -11,23 +11,27 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      redirectToReferrer: false
+      redirectToReferrer: false,
+      errors: {}
     };
 
-    this.login = this.login.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
-  login() {
+  onSubmit(e) {
     if (this.state.username && this.state.password) {
-      console.log("reached here!");
-      PostData("login", this.state).then(result => {
-        let responseJson = result;
-        console.log("Result: " + result);
-        if (responseJson.userData) {
-          sessionStorage.setItem("userData", JSON.stringify(responseJson));
-          console.log("JSON string: " + JSON.stringify(responseJson));
-          console.log("session store: " + sessionStorage);
+      e.preventDefault();
+
+      const user = {
+        username: this.state.username,
+        password: this.state.password
+      };
+
+      login(user).then(res => {
+        if (res === undefined) {
+          window.alert("Wrong Username or Password");
+        } else {
           this.setState({ redirectToReferrer: true });
         }
       });
@@ -36,7 +40,6 @@ class Login extends Component {
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    console.log({[e.target.name]: e.target.value});
   }
 
   render() {
@@ -44,8 +47,11 @@ class Login extends Component {
       return <Redirect to={"/home"} />;
     }
 
-    if (sessionStorage.getItem("userData")) {
+    if (localStorage.getItem("usertoken")) {
       return <Redirect to={"/home"} />;
+    }
+    if (localStorage.getItem("admintoken")) {
+      return <Redirect to={"/adminhome"} />;
     }
     return (
       <div className="container-fluid login-container">
@@ -57,19 +63,20 @@ class Login extends Component {
         <div className="row">
           <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <h1 className="web-name">Weather Warning System</h1>
-            <div className="card card-login my-5">
-              <div className="card-body">
-                <h5 className="card-title text-center">Log In</h5>
-                <p className="text-center text-danger">
-                  Note: Do not log out unless there is a change in shift. In
-                  that case, the next person must log in.
-                </p>
-                
+            <form onSubmit={this.onSubmit}>
+              <div className="card card-login my-5">
+                <div className="card-body">
+                  <h5 className="card-title text-center">Log In</h5>
+                  <p className="text-center text-danger">
+                    Note: Do not log out unless there is a change in shift. In
+                    that case, the next person must log in.
+                  </p>
                   <div className="form-label-group">
                     <input
                       name="username"
                       onChange={this.onChange}
                       type="text"
+                      value={this.state.username}
                       id="inputUsername"
                       className="form-control"
                       placeholder="Username"
@@ -83,6 +90,7 @@ class Login extends Component {
                   <div className="form-label-group">
                     <input
                       name="password"
+                      value={this.state.password}
                       onChange={this.onChange}
                       type="password"
                       id="inputPassword"
@@ -94,33 +102,17 @@ class Login extends Component {
                     />
                     <label htmlFor="inputPassword">Password</label>
                   </div>
-
-                  <div className="custom-control custom-checkbox mb-3">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="customCheck1"
-                    />
-                    <label
-                      className="custom-control-label"
-                      htmlFor="customCheck1"
-                    >
-                      Remember password
-                    </label>
-                  </div>
-                  <button
-                    className="btn btn-lg btn-success btn-block text-uppercase"
+                  <input
                     type="submit"
-                    onClick={this.login}
-                  >
-                    Log in
-                  </button>
+                    value="Log In"
+                    className="btn btn-lg btn-success btn-block text-uppercase"
+                  />
                   <p className="text-center register-label">
                     Not yet registered? <a href="/signup">Sign Up</a>
                   </p>
-                
+                </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
         <footer>
