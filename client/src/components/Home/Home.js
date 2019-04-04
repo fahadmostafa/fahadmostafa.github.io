@@ -79,6 +79,7 @@ class Home extends Component {
           </div>
           <div className="col-sm home-title-div">
             <h1 className="home-title">Weather Warning System - Home </h1>
+            <h6>You are logged in as {this.state.wardenName}</h6>
           </div>
           <div className="col-sm plot-btn-div">
             <button
