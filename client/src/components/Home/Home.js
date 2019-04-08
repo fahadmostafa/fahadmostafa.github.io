@@ -55,7 +55,7 @@ class Home extends Component {
       const token = localStorage.usertoken;
       const decoded = jwt_decode(token);
       this.setState({
-        wardenName: decoded.wardenName,
+        wardenName: decoded.warden_name,
         username: decoded.username,
         contact: decoded.contact,
         contractorName: decoded.contractorName,
@@ -71,6 +71,10 @@ class Home extends Component {
     if (this.state.redirectToReferrer) {
       return <Redirect to={"/"} />;
     }
+    if (localStorage.getItem("admintoken")) {
+      return <Redirect to={"/adminhome"} />;
+    }
+    
     return (
       <div className="container-fluid back">
         <div className="row">

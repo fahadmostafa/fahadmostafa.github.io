@@ -3,9 +3,9 @@ import { Redirect } from "react-router-dom";
 import Logo from "../../images/dsoa-logo-white.png";
 import jwt_decode from "jwt-decode";
 import $ from "jquery";
-import "./AdminHome.css";
+import "./Log.css";
 
-class AdminHome extends Component {
+class Log extends Component {
   constructor(props) {
     super(props);
 
@@ -98,26 +98,35 @@ class AdminHome extends Component {
             <div className="container-fluid">
               <div className="col-sm home-title-div">
                 <h1 className="admin-home-title">
-                  Weather Warning System - Admin Home
+                  Weather Warning System - Log{" "}
                 </h1>
-                <h6>You are logged in as {this.state.adminName}</h6>
               </div>
-              <div className="btn-box">
-                <button
-                  type="button"
-                  className="btn btn-warning btn-lg btn-warn"
-                  data-toggle="modal"
-                  data-target="#changePlotNo"
-                >
-                  Send a Warning
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger btn-lg btn-alert"
-                >
-                  Send an Alert
-                </button>
-              </div>
+              <table className="table table-striped">
+                <thead className="thead-light">
+                  <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>john@example.com</td>
+                  </tr>
+                  <tr>
+                    <td>Mary</td>
+                    <td>Moe</td>
+                    <td>mary@example.com</td>
+                  </tr>
+                  <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
           {/* /#page-content-wrapper */}
@@ -127,4 +136,4 @@ class AdminHome extends Component {
   }
 }
 
-export default AdminHome;
+export default Log;

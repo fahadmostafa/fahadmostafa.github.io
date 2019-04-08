@@ -1,5 +1,21 @@
 @import url(//db.onlinewebfonts.com/c/ca95c48955899f16fc852f1a8fe30b87?family=KGHAPPYSolidW00-Regular);
 
+.brand-box {
+  text-align: center;
+}
+
+.log-out-btn {
+  display: inline-block;
+}
+
+.home-brand-resize {
+  margin: 5px 5px 5px 5px;
+}
+
+.admin-home-title {
+  font-size: 5vh;
+}
+
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
@@ -20,10 +36,26 @@
 
 #page-content-wrapper {
   min-width: 100vw;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 #wrapper.toggled #sidebar-wrapper {
   margin-left: 0;
+}
+
+.btn-box {
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.btn-warn {
+  margin: 10px;
+}
+
+.btn-alert {
+  margin: 10px;
 }
 
 @media (min-width: 768px) {

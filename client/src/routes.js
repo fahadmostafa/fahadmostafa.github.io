@@ -6,6 +6,8 @@ import Home from "././components/Home/Home";
 import Login from "././components/Login/Login";
 import AdminLogin from "././components/AdminLogin/AdminLogin";
 import AdminHome from "./components/AdminHome/AdminHome";
+import Log from "./components/Log/Log";
+import UsersInfo from "./components/UsersInfo/UsersInfo";
 import Signup from "././components/Signup/Signup";
 import NotFound from "././components/NotFound/NotFound";
 
@@ -17,6 +19,8 @@ const Routes = () => (
       <Route path="/login" component={Login} />
       <Route path="/adminlogin" component={AdminLogin} />
       <Route path="/adminhome" component={AdminHome} />
+      <Route path="/log" component={Log} />
+      <Route path="/usersinfo" component={UsersInfo} />
       <Route path="/Signup" component={Signup} />
       <Route path="*" component={NotFound} />
     </Switch>
