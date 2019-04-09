@@ -1,7 +1,7 @@
-/* jshint indent: 2 */
+const Sequelize = require('sequelize');
+const db = require("../database/db");
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('weather_conditions', {
+module.exports = db.sequelize.define('weather_conditions', {
     weather_Id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -12,7 +12,4 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false
     }
-  }, {
-    tableName: 'weather_conditions'
-  });
-};
+});

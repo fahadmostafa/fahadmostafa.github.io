@@ -1,7 +1,7 @@
-/* jshint indent: 2 */
+const Sequelize = require('sequelize');
+const db = require("../database/db");
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('checklists', {
+module.exports = db.sequelize.define('checklists', {
     checklist_item: {
       type: DataTypes.TEXT,
       allowNull: false
@@ -14,7 +14,4 @@ module.exports = function(sequelize, DataTypes) {
         key: 'weather_Id'
       }
     }
-  }, {
-    tableName: 'checklists'
-  });
-};
+});

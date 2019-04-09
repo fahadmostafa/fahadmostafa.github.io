@@ -1,13 +1,10 @@
-/* jshint indent: 2 */
+const Sequelize = require('sequelize');
+const db = require("../database/db");
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('plots', {
+module.exports = db.sequelize.define('plots', {
     plot_no: {
       type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true
     }
-  }, {
-    tableName: 'plots'
-  });
-};
+});

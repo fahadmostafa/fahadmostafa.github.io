@@ -107,7 +107,7 @@ class AdminHome extends Component {
                   type="button"
                   className="btn btn-warning btn-lg btn-warn"
                   data-toggle="modal"
-                  data-target="#changePlotNo"
+                  data-target="#sendWarningChecklist"
                 >
                   Send a Warning
                 </button>
@@ -121,6 +121,65 @@ class AdminHome extends Component {
             </div>
           </div>
           {/* /#page-content-wrapper */}
+        </div>
+
+        <div
+          className="modal fade"
+          id="sendWarningChecklist"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="ChangePlotNumberModal"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="changePlotNo">
+                  Change Plot Number
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="form-label-group">
+                  <div className="form-group">
+                    <label htmlFor="plot">
+                      Plot no you are currently assigned in:
+                    </label>
+                    <select
+                      className="form-control"
+                      id="plot"
+                      name="plotNo"
+                      onChange={this.onChange}
+                    >
+                      <option>04-003</option>
+                      <option>06-020</option>
+                      <option>10-001</option>
+                      <option>10-003</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="button" className="btn btn-primary">
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

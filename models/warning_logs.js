@@ -1,7 +1,7 @@
-/* jshint indent: 2 */
+const Sequelize = require('sequelize');
+const db = require("../database/db");
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('warning_logs', {
+module.exports = db.sequelize.define('warning_logs', {
     log_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -20,7 +20,4 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false
     }
-  }, {
-    tableName: 'warning_logs'
   });
-};

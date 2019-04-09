@@ -1,7 +1,7 @@
-/* jshint indent: 2 */
+const Sequelize = require('sequelize');
+const db = require("../database/db");
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('warden_logs', {
+module.exports = db.sequelize.define('warden_logs', {
     log_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -18,7 +18,5 @@ module.exports = function(sequelize, DataTypes) {
         key: 'warden_id'
       }
     }
-  }, {
-    tableName: 'warden_logs'
   });
-};
+
