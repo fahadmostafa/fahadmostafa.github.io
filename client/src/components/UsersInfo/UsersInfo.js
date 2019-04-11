@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Logo from "../../images/dsoa-logo-white.png";
+import { usersinfo } from "../userFunctions";
 import jwt_decode from "jwt-decode";
 import $ from "jquery";
 import "./UsersInfo.css";
@@ -13,6 +14,7 @@ class UsersInfo extends Component {
       adminName: "",
       username: "",
       errors: {},
+      tableData: [],
       redirectToReferrer: false
     };
     this.logout = this.logout.bind(this);
@@ -38,6 +40,15 @@ class UsersInfo extends Component {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
       });
+
+      usersinfo().then(
+        res => {
+          this.setState({ tableData: res });
+        },
+        err => {
+            console.log("Error loading table data");
+        }
+      );
     }
   }
 
@@ -104,27 +115,31 @@ class UsersInfo extends Component {
               <table className="table table-striped">
                 <thead className="thead-light">
                   <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Email</th>
+                    <th>Warden ID</th>
+                    <th>Warden Name</th>
+                    <th>Warden Contact</th>
+                    <th>Plot No</th>
+                    <th>Contractor Name</th>
+                    <th>Contractor Email</th>
+                    <th>Contractor Contact</th>
+                    <th>Consultant Name</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                  </tr>
-                  <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                  </tr>
-                  <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                  </tr>
+                  {this.state.tableData.map((item, key) => {
+                    return (
+                      <tr key={key}>
+                        <td>{item.warden_id}</td>
+                        <td>{item.warden_name}</td>
+                        <td>{item.warden_contact}</td>
+                        <td>{item.plot_number}</td>
+                        <td>{item.contractor_name}</td>
+                        <td>{item.contractor_email}</td>
+                        <td>{item.contractor_contact}</td>
+                        <td>{item.consultant_name}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

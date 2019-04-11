@@ -6,6 +6,11 @@ const bcrypt = require("bcrypt");
 
 const wardens = require("../models/wardens");
 const admins = require("../models/admins");
+const checklists = require("../models/checklists");
+const plots = require("../models/plots");
+const warning_logs = require("../models/warning_logs");
+const weather_conditions = require("../models/weather_conditions");
+
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
@@ -178,4 +183,60 @@ users.post("/adminlogin", (req, res) => {
       res.status(404).json({ error: err });
     });
 });
+
+users.get("/usersinfo", (req, res) => {
+  wardens
+    .findAll({
+      attributes: [
+        "warden_id",
+        "warden_name",
+        "warden_contact",
+        "contractor_name",
+        "contractor_email",
+        "contractor_contact",
+        "consultant_name",
+        "plot_number"
+      ]
+    })
+    .then(usersinfo => {
+      res.end(JSON.stringify(usersinfo));
+    })
+    .catch(err => {
+      res.status(404).json({ err });
+    });
+});
+
+users.get("/log", (req, res) => {
+  warning_logs
+    .findAll()
+    .then(log => {
+      res.end(JSON.stringify(log));
+    })
+    .catch(err => {
+      res.status(404).json({ err });
+    });
+});
+
+users.get("/checklist", (req, res) => {
+  checklists
+    .findAll()
+    .then(checklist => {
+      res.end(JSON.stringify(checklist));
+    })
+    .catch(err => {
+      res.status(404).json({ err });
+    });
+});
+
+users.get("/plot", (req, res) => {
+  plots
+    .findAll()
+    .then(plot => {
+      res.end(JSON.stringify(plot));
+    })
+    .catch(err => {
+      res.status(404).json({ err });
+    });
+});
+
 module.exports = users;

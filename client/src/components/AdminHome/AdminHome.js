@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { checklist } from "../userFunctions";
 import Logo from "../../images/dsoa-logo-white.png";
 import jwt_decode from "jwt-decode";
 import $ from "jquery";
@@ -13,9 +14,12 @@ class AdminHome extends Component {
       adminName: "",
       username: "",
       errors: {},
+      checklistData: [],
+      selectedChecklistData: [],
       redirectToReferrer: false
     };
     this.logout = this.logout.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   logout(e) {
@@ -38,7 +42,21 @@ class AdminHome extends Component {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
       });
+      checklist()
+        .then(res => {
+          this.setState({ checklistData: res });
+          console.log(this.state.checklistData);
+        })
+        .catch(err => {
+          console.log(err);
+          console.log("Error loading checklist data");
+        });
     }
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+    console.log({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -135,7 +153,7 @@ class AdminHome extends Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="changePlotNo">
-                  Change Plot Number
+                  Select the list of activities to be taken care of
                 </h5>
                 <button
                   type="button"
@@ -147,23 +165,27 @@ class AdminHome extends Component {
                 </button>
               </div>
               <div className="modal-body">
-                <div className="form-label-group">
-                  <div className="form-group">
-                    <label htmlFor="plot">
-                      Plot no you are currently assigned in:
-                    </label>
-                    <select
-                      className="form-control"
-                      id="plot"
-                      name="plotNo"
-                      onChange={this.onChange}
-                    >
-                      <option>04-003</option>
-                      <option>06-020</option>
-                      <option>10-001</option>
-                      <option>10-003</option>
-                    </select>
-                  </div>
+                <div className="form-check">
+                  {this.state.checklistData.map((item, key) => {
+                    return (
+                      <div>
+                        <input key={key}
+                          className="form-check-input"
+                          name="checklistData"
+                          type="checkbox"
+                          // value={this.state.selectedChecklistData}
+                          onChange={this.onChange}
+                          id="defaultCheck1"
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="defaultCheck1"
+                        >
+                          {item.checklist_item}
+                        </label>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="modal-footer">
@@ -172,10 +194,10 @@ class AdminHome extends Component {
                   className="btn btn-secondary"
                   data-dismiss="modal"
                 >
-                  Close
+                  Cancel
                 </button>
-                <button type="button" className="btn btn-primary">
-                  Save changes
+                <button type="button" className="btn btn-warning">
+                  Send Warning
                 </button>
               </div>
             </div>

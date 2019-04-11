@@ -15,7 +15,7 @@ export const signup = newUser => {
     })
     .then(response => {
       return response.data;
-    })
+    });
 };
 
 export const login = user => {
@@ -47,3 +47,34 @@ export const adminlogin = user => {
       console.log("Wrong username or password");
     });
 };
+
+export const usersinfo = () => {
+  return axios
+    .get("users/usersinfo")
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("No user data found");
+    });
+};
+
+export const log = () => {
+  return axios.get("users/log")
+  .then(response => {
+    return response.data;
+  })
+  .catch(err => {
+    console.log("No log data found");
+  })
+}
+
+export const checklist = () => {
+  return axios.get("users/checklist")
+  .then(response => {
+    return response.data;
+  })
+  .catch(err => {
+    console.log("No checklist data found");
+  })
+}

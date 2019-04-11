@@ -3,21 +3,29 @@ const db = require("../database/db");
 
 module.exports = db.sequelize.define('warning_logs', {
     log_id: {
-      type: DataTypes.INTEGER(11),
+      type: Sequelize.INTEGER(11),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
+    warden_identity: {
+      type: Sequelize.INTEGER(11),
+      allowNull: false,
+      references: {
+        model: 'wardens',
+        key: 'warden_id'
+      }
+    },
     feedback_ack: {
-      type: DataTypes.INTEGER(1),
+      type: Sequelize.INTEGER(1),
       allowNull: false
     },
     feedback_rec_time: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
       allowNull: false
     },
     warning_date: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
       allowNull: false
     }
   });

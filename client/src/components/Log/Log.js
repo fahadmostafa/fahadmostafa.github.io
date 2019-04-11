@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Logo from "../../images/dsoa-logo-white.png";
+import { log } from "../userFunctions";
 import jwt_decode from "jwt-decode";
 import $ from "jquery";
 import "./Log.css";
@@ -13,6 +14,7 @@ class Log extends Component {
       adminName: "",
       username: "",
       errors: {},
+      tableData: [],
       redirectToReferrer: false
     };
     this.logout = this.logout.bind(this);
@@ -38,6 +40,16 @@ class Log extends Component {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
       });
+    //   setTimeout( () => {
+    //     $( "#log-table" ).load( "index.html #log-table" )
+    //   }, 5000);
+      log()
+        .then(res => {
+          this.setState({ tableData: res });
+        })
+        .catch(err => {
+          console.log("Error loading table data");
+        });
     }
   }
 
@@ -101,30 +113,28 @@ class Log extends Component {
                   Weather Warning System - Log{" "}
                 </h1>
               </div>
-              <table className="table table-striped">
+              <table className="table table-striped" id="log-table">
                 <thead className="thead-light">
                   <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Email</th>
+                  <th>Log ID</th>
+                    <th>Warden ID</th>
+                    <th>Feedback Acknowledged</th>
+                    <th>Feedback Received Timestamp</th>
+                    <th>Warning Timestamp</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                  </tr>
-                  <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                  </tr>
-                  <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                  </tr>
+                {this.state.tableData.map((item, key) => {
+                    return (
+                      <tr key={key}>
+                        <td>{item.log_id}</td>
+                        <td>{item.warden_identity}</td>
+                        <td>{item.feedback_ack}</td>
+                        <td>{item.feedback_rec_time}</td>
+                        <td>{item.warning_date}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
