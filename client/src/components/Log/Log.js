@@ -18,6 +18,7 @@ class Log extends Component {
       redirectToReferrer: false
     };
     this.logout = this.logout.bind(this);
+    this.getLog = this.getLog.bind(this);
   }
 
   logout(e) {
@@ -40,17 +41,26 @@ class Log extends Component {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
       });
-    //   setTimeout( () => {
-    //     $( "#log-table" ).load( "index.html #log-table" )
-    //   }, 5000);
-      log()
-        .then(res => {
-          this.setState({ tableData: res });
-        })
-        .catch(err => {
-          console.log("Error loading table data");
-        });
+
+      this.getLog();
+      this.update = setInterval(() => {
+        this.getLog();
+      }, 4000);
     }
+  }
+
+  getLog = () => {
+    log()
+      .then(res => {
+        this.setState({ tableData: res });
+      })
+      .catch(err => {
+        console.log("Error loading table data");
+      });
+  };
+
+  componentWillUnmount() {
+    clearInterval(this.update);
   }
 
   render() {
@@ -109,34 +119,39 @@ class Log extends Component {
 
             <div className="container-fluid">
               <div className="col-sm home-title-div">
-                <h1 className="admin-home-title">
+                <h1 className="admin-log-title">
                   Weather Warning System - Log{" "}
                 </h1>
               </div>
-              <table className="table table-striped" id="log-table">
-                <thead className="thead-light">
-                  <tr>
-                  <th>Log ID</th>
-                    <th>Warden ID</th>
-                    <th>Feedback Acknowledged</th>
-                    <th>Feedback Received Timestamp</th>
-                    <th>Warning Timestamp</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {this.state.tableData.map((item, key) => {
-                    return (
-                      <tr key={key}>
-                        <td>{item.log_id}</td>
-                        <td>{item.warden_identity}</td>
-                        <td>{item.feedback_ack}</td>
-                        <td>{item.feedback_rec_time}</td>
-                        <td>{item.warning_date}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <div className="table-div">
+                <table className="table table-striped" id="log-table">
+                  <thead className="thead-light">
+                    <tr>
+                      <th>Log ID</th>
+                      <th>Warden ID</th>
+                      <th>Feedback Acknowledged</th>
+                      <th>Feedback Received Timestamp</th>
+                      <th>Warning Timestamp</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.tableData.map((item, key) => {
+                      return (
+                        <tr key={key}>
+                          <td>{item.log_id}</td>
+                          <td>{item.warden_identity}</td>
+                          <td>{item.feedback_ack}</td>
+                          <td>{item.feedback_rec_time}</td>
+                          <td>{item.warning_date}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <div className="justify-content-center">
+                <label>&larr; scroll &rarr;</label>
+              </div>
             </div>
           </div>
           {/* /#page-content-wrapper */}

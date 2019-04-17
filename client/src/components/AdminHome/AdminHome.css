@@ -58,6 +58,23 @@
   margin: 10px;
 }
 
+.div-test {
+  border: 1px solid black;
+}
+
+.list-group-item-primary {
+  color: rgb(255, 255, 255);
+  background-color: rgb(66, 139, 202);
+}
+
+.checkbox-label {
+  display: block;
+}
+
+.warning-send-final-btn {
+  text-align: center;
+}
+
 @media (min-width: 768px) {
   #sidebar-wrapper {
     margin-left: 0;

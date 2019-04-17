@@ -21,11 +21,11 @@ module.exports = db.sequelize.define('warning_logs', {
       allowNull: false
     },
     feedback_rec_time: {
-      type: Sequelize.DATE,
+      type: Sequelize.TEXT,
       allowNull: false
     },
     warning_date: {
-      type: Sequelize.DATE,
+      type: Sequelize.TEXT,
       allowNull: false
     }
   });

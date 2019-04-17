@@ -112,6 +112,7 @@ class UsersInfo extends Component {
                   Weather Warning System - List of Users{" "}
                 </h1>
               </div>
+              <div className="table-div">
               <table className="table table-striped">
                 <thead className="thead-light">
                   <tr>
@@ -142,6 +143,8 @@ class UsersInfo extends Component {
                   })}
                 </tbody>
               </table>
+              </div>
+              <label>&larr; scroll &rarr;</label>
             </div>
           </div>
           {/* /#page-content-wrapper */}

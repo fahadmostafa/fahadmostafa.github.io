@@ -1,6 +1,9 @@
 @import url(//db.onlinewebfonts.com/c/ca95c48955899f16fc852f1a8fe30b87?family=KGHAPPYSolidW00-Regular);
 
-
 .admin-home-title {
-    font-size: 5vh;
-  }
+  font-size: 5vh;
+}
+
+.table-div {
+  overflow: auto;
+}

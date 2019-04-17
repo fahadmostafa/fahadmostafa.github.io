@@ -15,10 +15,15 @@ const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={Welcome} />
-      <Route path="/home" component={Home} />
+      <Route path="/home" component={Home} data={this.state.data} />
       <Route path="/login" component={Login} />
       <Route path="/adminlogin" component={AdminLogin} />
-      <Route path="/adminhome" component={AdminHome} />
+      <Route
+        path="/adminhome"
+        render={routeProps => (
+          <AdminHome {...routeProps} callback={this.getChildData} />
+        )}
+      />
       <Route path="/log" component={Log} />
       <Route path="/usersinfo" component={UsersInfo} />
       <Route path="/Signup" component={Signup} />

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { checklist } from "../userFunctions";
+import { getdata } from "../userFunctions";
+import { senddata } from "../userFunctions";
+import { deletedata } from "../userFunctions";
 import Logo from "../../images/dsoa-logo-white.png";
 import jwt_decode from "jwt-decode";
 import $ from "jquery";
@@ -13,13 +16,20 @@ class AdminHome extends Component {
     this.state = {
       adminName: "",
       username: "",
+      warning: "warning",
+      alert: "alert",
       errors: {},
       checklistData: [],
       selectedChecklistData: [],
+      warningSent: false,
       redirectToReferrer: false
     };
     this.logout = this.logout.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmitAlert = this.onSubmitAlert.bind(this);
+    this.onCancelWarning = this.onCancelWarning.bind(this);
+    this.onCancelAlert = this.onCancelAlert.bind(this);
   }
 
   logout(e) {
@@ -45,18 +55,152 @@ class AdminHome extends Component {
       checklist()
         .then(res => {
           this.setState({ checklistData: res });
-          console.log(this.state.checklistData);
         })
         .catch(err => {
-          console.log(err);
           console.log("Error loading checklist data");
+        });
+      senddata().then(res => {
+        if (Object.keys(res).length === 0) {
+          this.setState({ warningSent: false });
+          this.setState({ alertSent: false });
+        } else {
+          if (res[0].warning_type === "warning") {
+            this.setState({ warningSent: true });
+          } else {
+            if (res[0].warning_type === "alert") {
+              this.setState({ alertSent: true });
+            } else {
+              window.alert("Something went wrong! Try refreshing the page.");
+            }
+          }
+        }
+      });
+    }
+  }
+
+  onSubmit(e) {
+    if (Object.keys(this.state.selectedChecklistData).length === 0) {
+      e.preventDefault();
+      window.alert("Select at least one activity to send as a warning.");
+    } else {
+      e.preventDefault();
+
+      const warningDate = Date();
+
+      const dataArr = {
+        selectedChecklistData: this.state.selectedChecklistData.join(),
+        warning: this.state.warning,
+        warningDate: warningDate
+      };
+
+      getdata(dataArr)
+        .then(res => {
+          if (res.error || !res) {
+            window.alert(
+              "Cannot send a warning! Cancel the previous one first."
+            );
+            $(".close").click();
+          } else {
+            window.alert(
+              "Warning has been sent. Check log for feedback from the sites."
+            );
+            this.setState({ warningSent: true });
+            window.location.reload();
+          }
+        })
+        .catch(err => {
+          console.log("No response");
         });
     }
   }
 
+  onSubmitAlert(e) {
+    if (this.state.warningSent) {
+      e.preventDefault();
+      window.alert("Cancel the warning first before sending an alert");
+    } else {
+      e.preventDefault();
+
+      const warningDate = Date();
+
+      const dataArr = {
+        selectedChecklistData:
+          "All activities must be stopped immediately. BAD WEATHER!!!",
+        warning: this.state.alert,
+        warningDate: warningDate
+      };
+
+      getdata(dataArr)
+        .then(res => {
+          if (res.error || !res) {
+            window.alert(
+              "Cannot send an alert! Cancel the previous one first."
+            );
+          } else {
+            window.alert(
+              "Alert has been sent. Check log for feedback from the sites."
+            );
+            this.setState({ alertSent: true });
+          }
+        })
+        .catch(err => {
+          console.log("No response");
+        });
+    }
+  }
+
+  onCancelWarning(e) {
+    e.preventDefault();
+    deletedata()
+      .then(res => {
+        if (res.success) {
+          window.alert("The warning has been cancelled");
+        } else {
+          if (res.error) {
+            window.alert("Nothing to cancel");
+          }
+        }
+      })
+      .catch(err => {
+        console.log("Could not cancel due to an unexpected error.");
+      });
+    this.setState({ warningSent: false });
+  }
+
+  onCancelAlert(e) {
+    e.preventDefault();
+    deletedata()
+      .then(res => {
+        if (res.success) {
+          window.alert("The alert has been cancelled");
+        } else {
+          if (res.error) {
+            window.alert("Nothing to cancel");
+          }
+        }
+      })
+      .catch(err => {
+        console.log("Could not cancel due to an unexpected error.");
+      });
+    this.setState({ alertSent: false });
+  }
+
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-    console.log({ [e.target.name]: e.target.value });
+    if (this.state.selectedChecklistData) {
+      const selectedChecklistData = this.state.selectedChecklistData;
+      let i;
+
+      if (e.target.checked) {
+        selectedChecklistData.push(e.target.value);
+      } else {
+        i = selectedChecklistData.indexOf(e.target.value);
+        selectedChecklistData.splice(i, 1);
+      }
+
+      this.setState({ selectedChecklistData: selectedChecklistData });
+    } else {
+      console.log("Error 404 not found");
+    }
   }
 
   render() {
@@ -121,20 +265,41 @@ class AdminHome extends Component {
                 <h6>You are logged in as {this.state.adminName}</h6>
               </div>
               <div className="btn-box">
-                <button
-                  type="button"
-                  className="btn btn-warning btn-lg btn-warn"
-                  data-toggle="modal"
-                  data-target="#sendWarningChecklist"
-                >
-                  Send a Warning
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger btn-lg btn-alert"
-                >
-                  Send an Alert
-                </button>
+                {this.state.warningSent ? (
+                  <button
+                    type="button"
+                    className="btn btn-warning btn-lg btn-warn"
+                    onClick={this.onCancelWarning}
+                  >
+                    Cancel Warning
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn btn-warning btn-lg btn-warn"
+                    data-toggle="modal"
+                    data-target="#sendWarningChecklist"
+                  >
+                    Send a Warning
+                  </button>
+                )}
+                {this.state.alertSent ? (
+                  <button
+                    type="button"
+                    className="btn btn-danger btn-lg btn-alert"
+                    onClick={this.onCancelAlert}
+                  >
+                    Cancel Alert
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={this.onSubmitAlert}
+                    className="btn btn-danger btn-lg btn-alert"
+                  >
+                    Send an Alert
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -165,28 +330,49 @@ class AdminHome extends Component {
                 </button>
               </div>
               <div className="modal-body">
-                <div className="form-check">
-                  {this.state.checklistData.map((item, key) => {
-                    return (
-                      <div>
-                        <input key={key}
-                          className="form-check-input"
-                          name="checklistData"
-                          type="checkbox"
-                          // value={this.state.selectedChecklistData}
-                          onChange={this.onChange}
-                          id="defaultCheck1"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="defaultCheck1"
-                        >
-                          {item.checklist_item}
-                        </label>
+                <form onSubmit={this.onSubmit}>
+                  <div>
+                    {this.state.checklistData ? (
+                      <div className="form-check">
+                        {this.state.checklistData.map((item, key) => {
+                          return (
+                            <label
+                              className="checkbox-label form-check-label"
+                              key={key}
+                            >
+                              <input
+                                type="checkbox"
+                                className="form-check-input"
+                                value={item.checklist_item}
+                                onChange={this.onChange}
+                                title="Please check at least one box to send a warning."
+                              />
+                              {item.checklist_item}-{" "}
+                              {item.condition_id === 1
+                                ? "Rain"
+                                : item.condition_id === 2
+                                ? "Visibility"
+                                : item.condition_id === 3
+                                ? "Wind Speed"
+                                : item.condition_id === 4
+                                ? "High Temperature"
+                                : " "}
+                            </label>
+                          );
+                        })}
                       </div>
-                    );
-                  })}
-                </div>
+                    ) : (
+                      <div> Loading ... {window.location.reload()}</div>
+                    )}
+                  </div>
+                  <div className="warning-send-final-btn">
+                    <input
+                      type="submit"
+                      value="Send Warning"
+                      className="btn btn-warning "
+                    />
+                  </div>
+                </form>
               </div>
               <div className="modal-footer">
                 <button
@@ -194,10 +380,7 @@ class AdminHome extends Component {
                   className="btn btn-secondary"
                   data-dismiss="modal"
                 >
-                  Cancel
-                </button>
-                <button type="button" className="btn btn-warning">
-                  Send Warning
+                  Close
                 </button>
               </div>
             </div>

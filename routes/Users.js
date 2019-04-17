@@ -9,6 +9,7 @@ const admins = require("../models/admins");
 const checklists = require("../models/checklists");
 const plots = require("../models/plots");
 const warning_logs = require("../models/warning_logs");
+const selected_checklists = require("../models/selected_checklists");
 const weather_conditions = require("../models/weather_conditions");
 
 users.use(cors());
@@ -62,6 +63,42 @@ users.post("/signup", (req, res) => {
       } else {
         res.json({ error: " Username is already taken" });
         console.log("Username already exists");
+      }
+    })
+    .catch(err => {
+      res.send("error: " + err);
+      console.log("error: " + err);
+    });
+});
+
+users.post("/getdata", (req, res) => {
+  const checklistData = {
+    checklist_id: 1,
+    checklist_item: req.body.selectedChecklistData,
+    warning_type: req.body.warning,
+    warning_date: req.body.warningDate
+  };
+
+  selected_checklists
+    .findOne({
+      where: {
+        checklist_id: 1
+      }
+    })
+    .then(data => {
+      if (!data) {
+        selected_checklists
+          .create(checklistData)
+          .then(data => {
+            res.send({ status: data.checklist_item + " is stored" });
+            console.log(data.checklist_item + " is stored");
+          })
+          .catch(err => {
+            res.send("error storing data: " + err);
+            console.log("error storing data");
+          });
+      } else {
+        res.send({ error: "cannot update" });
       }
     })
     .catch(err => {
@@ -148,7 +185,7 @@ users.post("/login", (req, res) => {
       }
     })
     .catch(err => {
-      res.status(404).json({ error: err });
+      res.status(404).json({ error: " User not found" });
     });
 });
 
@@ -180,7 +217,7 @@ users.post("/adminlogin", (req, res) => {
       }
     })
     .catch(err => {
-      res.status(404).json({ error: err });
+      res.status(404).json({ error: " User not found" });
     });
 });
 
@@ -204,6 +241,31 @@ users.get("/usersinfo", (req, res) => {
     .catch(err => {
       res.status(404).json({ err });
     });
+});
+
+users.delete("/deletedata", (req, res) => {
+  selected_checklists
+    .destroy({
+      where: {
+        checklist_id: 1
+      }
+    })
+    .then(status => {
+      if (status) {
+        res.json({
+          success: "Warning/Alert has been deleted"
+        });
+      } else {
+        res.json({
+          failure: "No warning/alert to delete"
+        });
+      }
+    })
+    .catch(err =>
+      res.json({
+        error: "Could not cancel warning/alert."
+      })
+    );
 });
 
 users.get("/log", (req, res) => {
@@ -233,6 +295,17 @@ users.get("/plot", (req, res) => {
     .findAll()
     .then(plot => {
       res.end(JSON.stringify(plot));
+    })
+    .catch(err => {
+      res.status(404).json({ err });
+    });
+});
+
+users.get("/senddata", (req, res) => {
+  selected_checklists
+    .findAll()
+    .then(selectedChecklist => {
+      res.end(JSON.stringify(selectedChecklist));
     })
     .catch(err => {
       res.status(404).json({ err });

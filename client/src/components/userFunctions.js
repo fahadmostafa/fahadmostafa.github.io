@@ -15,6 +15,46 @@ export const signup = newUser => {
     })
     .then(response => {
       return response.data;
+    })
+    .catch(err => {
+      console.log("Something went wrong, try again");
+    });
+};
+
+export const getdata = dataArr => {
+  return axios
+    .post("users/getdata", {
+      selectedChecklistData: dataArr.selectedChecklistData,
+      warning: dataArr.warning,
+      warningDate: dataArr.warningDate
+    })
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("Failure");
+    });
+};
+
+export const senddata = () => {
+  return axios
+    .get("users/senddata")
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("Failed to retrieve warning/alert data");
+    });
+};
+
+export const deletedata = () => {
+  return axios
+    .delete("users/deletedata")
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("Failed to initiate delete");
     });
 };
 
@@ -60,21 +100,23 @@ export const usersinfo = () => {
 };
 
 export const log = () => {
-  return axios.get("users/log")
-  .then(response => {
-    return response.data;
-  })
-  .catch(err => {
-    console.log("No log data found");
-  })
-}
+  return axios
+    .get("users/log")
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("No log data found");
+    });
+};
 
 export const checklist = () => {
-  return axios.get("users/checklist")
-  .then(response => {
-    return response.data;
-  })
-  .catch(err => {
-    console.log("No checklist data found");
-  })
-}
+  return axios
+    .get("users/checklist")
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("No checklist data found");
+    });
+};
