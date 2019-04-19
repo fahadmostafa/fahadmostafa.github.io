@@ -74,6 +74,9 @@ class AdminHome extends Component {
             }
           }
         }
+      })
+      .catch(err => {
+        console.log("Cannot check status of warning/alert")
       });
     }
   }
@@ -243,7 +246,7 @@ class AdminHome extends Component {
           {/* /#sidebar-wrapper */}
 
           {/* Page Content */}
-          <div id="page-content-wrapper">
+          <div id="page-content-wrapper" className="admin-back">
             <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
               <button className="btn btn-primary" id="menu-toggle">
                 Menu

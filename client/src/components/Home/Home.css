@@ -78,8 +78,8 @@
 }
 
 .weather-type {
-  width: 12vmin;
-  height: 12.5vmin;
+  width: 10vmin;
+  height: 10.5vmin;
 }
 
 .warning-description, .alert-description, .no-warning-description {

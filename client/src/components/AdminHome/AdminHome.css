@@ -1,5 +1,11 @@
 @import url(//db.onlinewebfonts.com/c/ca95c48955899f16fc852f1a8fe30b87?family=KGHAPPYSolidW00-Regular);
 
+.admin-back {
+  background-image: url("../../images/interlaced.png");
+  background-repeat: no-repeat;
+  background-size: 100vmax;
+}
+
 .brand-box {
   text-align: center;
 }

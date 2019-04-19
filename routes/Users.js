@@ -107,6 +107,33 @@ users.post("/getdata", (req, res) => {
     });
 });
 
+users.post("/acksend", (req, res) => {
+  const ackData = {
+    warden_identity: req.body.userid,
+    feedback_ack: req.body.feedbackAck,
+    feedback_rec_time: req.body.acknowledgeDate,
+    warning_date: req.body.warningRecDate
+  };
+  warning_logs
+    .create(ackData)
+    .then(status => {
+      if (status) {
+        res.json({
+          success: "Log has been created"
+        });
+      } else {
+        res.json({
+          failure: "Failed to log data"
+        });
+      }
+    })
+    .catch(err =>
+      res.json({
+        error: "Could not create a log"
+      })
+    );
+});
+
 users.post("/adminsignup", (req, res) => {
   const adminData = {
     admin_name: req.body.adminName,
@@ -270,7 +297,9 @@ users.delete("/deletedata", (req, res) => {
 
 users.get("/log", (req, res) => {
   warning_logs
-    .findAll()
+    .findAll({
+      order: [["log_id", "DESC"]]
+    })
     .then(log => {
       res.end(JSON.stringify(log));
     })

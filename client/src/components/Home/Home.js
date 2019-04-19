@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { senddata } from "../userFunctions";
+import { acksend } from "../userFunctions";
+import { log } from "../userFunctions";
 import "./Home.css";
 import Logo from "../../images/dsoa-logo-white.png";
 import WarningLift from "../../images/flagWarningLift.png";
@@ -17,10 +19,7 @@ import WarningPuddle from "../../images/flagWarningPuddle.png";
 import WarningSummer from "../../images/flagWarningSummer.png";
 import WarningWaste from "../../images/flagWarningWaste.png";
 import WarningWater from "../../images/flagWarningWater.png";
-// import Wind from "../../images/wind.png";
-// import Rain from "../../images/rain.png";
-// import Visibility from "../../images/fog.png";
-import Temperature from "../../images/temperature.png";
+import Weather from "../../images/Weather.png";
 import Alert from "../../images/flagRed.png";
 import NoWarning from "../../images/flagGreen.png";
 
@@ -29,6 +28,7 @@ class Home extends Component {
     super(props);
 
     this.state = {
+      userid: 0,
       wardenName: "",
       username: "",
       contact: "",
@@ -41,12 +41,15 @@ class Home extends Component {
       warningFlag: false,
       alertFlag: false,
       warningData: "",
+      warningRecDate: "",
+      warningType: "",
       acknowledgeData: [],
       acknowledgeFlag: false,
       redirectToReferrer: false
     };
     this.logout = this.logout.bind(this);
     this.getWarning = this.getWarning.bind(this);
+    this.sendAck = this.sendAck.bind(this);
   }
 
   logout(e) {
@@ -62,8 +65,9 @@ class Home extends Component {
       const token = localStorage.usertoken;
       const decoded = jwt_decode(token);
       this.setState({
+        userid: decoded.warden_id,
         wardenName: decoded.warden_name,
-        username: decoded.username,
+        username: decoded.warden_username,
         contact: decoded.contact,
         contractorName: decoded.contractorName,
         contractorEmail: decoded.contractorEmail,
@@ -77,16 +81,26 @@ class Home extends Component {
         this.getWarning();
       }, 6000);
 
-      // this.getWarning = setInterval(() => {
-      //   var receiveWarning = function(msg, data) {
-      //     console.log("This is the data received: ", msg, data);
-      //     return data;
-      //   };
-
-      //   PubSub.subscribe("Warning", receiveWarning);
-      //   console.log("Reloaded");
-      //   console.log(receiveWarning);
-      // }, 5000);
+      log()
+        .then(res => {
+          let wardenCheck = 0;
+          let dateCheck = "";
+          res.forEach(item => {
+            wardenCheck = item.warden_identity;
+            dateCheck = item.warning_date;
+            if (
+              wardenCheck === this.state.userid &&
+              dateCheck === this.state.warningRecDate
+            ) {
+              this.setState({ acknowledgeFlag: true });
+            } else {
+              this.setState({ acknowledgeFlag: false });
+            }
+          });
+        })
+        .catch(err => {
+          console.log("Cannot check for acknowledgement status");
+        });
     }
   }
 
@@ -96,16 +110,18 @@ class Home extends Component {
         if (Object.keys(res).length === 0) {
           this.setState({ warningFlag: false });
           this.setState({ alertFlag: false });
+          this.setState({ acknowledgeFlag: false });
         } else {
           if (res[0].warning_type === "warning") {
             let dataArr = res[0].checklist_item;
             dataArr = dataArr.split(",");
-
+            this.setState({ warningRecDate: res[0].warning_date });
             this.setState({ warningData: dataArr });
             this.setState({ warningFlag: true });
           } else {
             if (res[0].warning_type === "alert") {
-              this.setState({ warningData: [res[0].checklist_item] });
+              this.setState({ warningRecDate: res[0].warning_date });
+              this.setState({ warningData: res[0].checklist_item });
               this.setState({ alertFlag: true });
             } else {
               window.alert("Something went wrong! Try refreshing the page.");
@@ -118,8 +134,31 @@ class Home extends Component {
       });
   };
 
+  sendAck(e) {
+    e.preventDefault();
+    const acknowledgeDate = Date();
+    console.log("ack date: " + acknowledgeDate);
+
+    const ackArr = {
+      userid: this.state.userid,
+      feedbackAck: 1,
+      acknowledgeDate: acknowledgeDate,
+      warningRecDate: this.state.warningRecDate
+    };
+    console.log("data to log: " + JSON.stringify(ackArr));
+
+    acksend(ackArr)
+      .then(res => {
+        this.setState({ acknowledgeFlag: true });
+      })
+      .catch(err => {
+        console.log("Cannot acknowledge!");
+      });
+  }
+
   componentWillUnmount() {
     clearInterval(this.update);
+    clearTimeout(this.check);
   }
 
   render() {
@@ -168,7 +207,7 @@ class Home extends Component {
                   {(counter = counter + 1)}
                   <div className="col-8 content-box warning-box">
                     <div className="row">
-                      <div className="col flag-box align-self-center">
+                      <div className="col-3 flag-box align-self-center">
                         <img
                           className="img-warning"
                           alt="Yellow Flag"
@@ -216,10 +255,10 @@ class Home extends Component {
                         <img
                           className="weather-type"
                           alt="Type of weather condition"
-                          src={Temperature}
+                          src={Weather}
                         />
                       </div>
-                      <div className="col align-self-center">
+                      <div className="col-md-6 align-self-center">
                         <p className="warning-description">{item}</p>
                       </div>
                     </div>
@@ -227,15 +266,27 @@ class Home extends Component {
                 </div>
               );
             })}
-            <div className="col-md-6 offset-md-3 ack-box">
-              <p className="text-danger ack-text">
-                I hereby acknowledge that appropriate actions were taken
-                infavour of the above warnings received.
-              </p>
-              <button type="button" className="btn btn-lg btn-success ack-btn">
-                Acknowledge
-              </button>
-            </div>
+            {this.state.acknowledgeFlag ? (
+              <div className="col-md-6 offset-md-3 ack-box">
+                <label className="ack-text">
+                  Your acknowledgement has been received.
+                </label>
+              </div>
+            ) : (
+              <div className="col-md-6 offset-md-3 ack-box">
+                <p className="text-danger ack-text">
+                  I hereby acknowledge that appropriate actions were taken
+                  infavour of the above warnings received.
+                </p>
+                <button
+                  type="button"
+                  className="btn btn-lg btn-success ack-btn"
+                  onClick={this.sendAck}
+                >
+                  Acknowledge
+                </button>
+              </div>
+            )}
           </div>
         ) : this.state.alertFlag ? (
           <div>
@@ -253,15 +304,27 @@ class Home extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-md-6 offset-md-3 ack-box">
-              <p className="text-danger ack-text">
-                I hereby acknowledge that all activities are stopped in favour
-                of the above alert received.
-              </p>
-              <button type="button" className="btn btn-lg btn-success ack-btn">
-                Acknowledge
-              </button>
-            </div>
+            {this.state.acknowledgeFlag ? (
+              <div className="col-md-6 offset-md-3 ack-box">
+                <label className="ack-text">
+                  Your acknowledgement has been received.
+                </label>
+              </div>
+            ) : (
+              <div className="col-md-6 offset-md-3 ack-box">
+                <p className="text-danger ack-text">
+                  I hereby acknowledge that all activities are stopped in favour
+                  of the above alert received.
+                </p>
+                <button
+                  type="button"
+                  className="btn btn-lg btn-success ack-btn"
+                  onClick={this.sendAck}
+                >
+                  Acknowledge
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <div className="row justify-content-center">

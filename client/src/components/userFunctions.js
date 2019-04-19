@@ -58,6 +58,22 @@ export const deletedata = () => {
     });
 };
 
+export const acksend = ackArr => {
+  return axios
+    .post("users/acksend", {
+      userid: ackArr.userid,
+      feedbackAck: ackArr.feedbackAck,
+      acknowledgeDate: ackArr.acknowledgeDate,
+      warningRecDate: ackArr.warningRecDate
+    })
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("Failed to log acknowledgement.");
+    });
+};
+
 export const login = user => {
   return axios
     .post("users/login", {
