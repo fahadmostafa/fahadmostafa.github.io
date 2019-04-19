@@ -6,13 +6,13 @@ import { Route, Switch } from "react-router-dom";
 import Welcome from "././components/Welcome/Welcome";
 import Home from "././components/Home/Home";
 import Login from "././components/Login/Login";
+import ErucesadminngisUp from "././components/ErucesadminngisUp/ErucesadminngisUp";
 import AdminLogin from "././components/AdminLogin/AdminLogin";
 import AdminHome from "./components/AdminHome/AdminHome";
 import Log from "./components/Log/Log";
 import UsersInfo from "./components/UsersInfo/UsersInfo";
 import Signup from "././components/Signup/Signup";
 import NotFound from "././components/NotFound/NotFound";
-// import Routes from "./routes";
 
 class App extends Component {
   constructor(props) {
@@ -29,6 +29,7 @@ class App extends Component {
           <Route exact path="/" component={Welcome} />
           <Route path="/home" component={Home} />
           <Route path="/login" component={Login} />
+          <Route path="/ErucesadminngisUp" component={ErucesadminngisUp} />
           <Route path="/adminlogin" component={AdminLogin} />
           <Route path="/adminhome" component={AdminHome} />
           <Route path="/log" component={Log} />

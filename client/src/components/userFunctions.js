@@ -21,6 +21,21 @@ export const signup = newUser => {
     });
 };
 
+export const adminsignup = newAdmin => {
+  return axios
+    .post("users/adminsignup", {
+      adminName: newAdmin.adminName,
+      username: newAdmin.username,
+      password: newAdmin.password
+    })
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("Something went wrong, try again");
+    });
+};
+
 export const getdata = dataArr => {
   return axios
     .post("users/getdata", {

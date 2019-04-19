@@ -56,6 +56,7 @@ class Signup extends Component {
         if (res.error) {
           window.alert("Username already taken");
         } else {
+          window.alert("Your account has been created successfully.")
           this.props.history.push(`/login`);
         }
       });

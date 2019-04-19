@@ -137,7 +137,6 @@ class Home extends Component {
   sendAck(e) {
     e.preventDefault();
     const acknowledgeDate = Date();
-    console.log("ack date: " + acknowledgeDate);
 
     const ackArr = {
       userid: this.state.userid,
@@ -145,7 +144,6 @@ class Home extends Component {
       acknowledgeDate: acknowledgeDate,
       warningRecDate: this.state.warningRecDate
     };
-    console.log("data to log: " + JSON.stringify(ackArr));
 
     acksend(ackArr)
       .then(res => {
@@ -158,7 +156,6 @@ class Home extends Component {
 
   componentWillUnmount() {
     clearInterval(this.update);
-    clearTimeout(this.check);
   }
 
   render() {
