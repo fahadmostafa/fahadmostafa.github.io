@@ -56,7 +56,7 @@ class Signup extends Component {
         if (res.error) {
           window.alert("Username already taken");
         } else {
-          window.alert("Your account has been created successfully.")
+          window.alert("Your account has been created successfully.");
           this.props.history.push(`/login`);
         }
       });
@@ -229,27 +229,58 @@ class Signup extends Component {
                     <label htmlFor="inputConsultantName">Consultant</label>
                   </div>
 
-                  <div className="form-label-group">
-                    <div className="form-group">
-                      <label htmlFor="plot">
-                        Plot no you are currently assigned in:
-                      </label>
-                      <select
-                        className="form-control"
-                        id="plot"
-                        name="plotNo"
-                        value={this.state.plotNo}
-                        onChange={this.onChange}
-                        required
-                      >
-                        <option />
-                        <option>04-003</option>
-                        <option>06-020</option>
-                        <option>10-001</option>
-                        <option>10-003</option>
-                      </select>
-                    </div>
+                  <div className="form-group option-box">
+                    <label htmlFor="plot">
+                      Plot no. you are currently assigned in:
+                    </label>
+                    <select
+                      className="form-control"
+                      id="plot"
+                      name="plotNo"
+                      value={this.state.plotNo}
+                      onChange={this.onChange}
+                      required
+                    >
+                      <option />
+                      <option>04-003</option>
+                      <option>06-020</option>
+                      <option>10-001</option>
+                      <option>10-003</option>
+                      <option>10-006</option>
+                      <option>10-015</option>
+                      <option>11-013</option>
+                      <option>11-043</option>
+                      <option>12-002</option>
+                      <option>12-007</option>
+                      <option>12-013</option>
+                      <option>12-016</option>
+                      <option>13-014</option>
+                      <option>13-015</option>
+                      <option>15-006</option>
+                      <option>21-011</option>
+                      <option>21-012</option>
+                      <option>21-016</option>
+                      <option>21-017</option>
+                      <option>21-020</option>
+                      <option>22-002</option>
+                      <option>22-003</option>
+                      <option>22-018</option>
+                      <option>22-024</option>
+                      <option>22-026</option>
+                      <option>23-007</option>
+                      <option>24-001</option>
+                      <option>25-055</option>
+                      <option>25-079</option>
+                      <option>26-030</option>
+                      <option>26-057</option>
+                      <option>26-059</option>
+                      <option>26-065</option>
+                      <option>27-019</option>
+                      <option>27-035</option>
+                      <option>28-016</option>
+                    </select>
                   </div>
+
                   <input
                     type="submit"
                     value="Sign Up"
