@@ -40,7 +40,7 @@ class Welcome extends Component {
               <h1 className="web-name">Weather Warning System</h1>
 
               <p className="tagline">
-                Please login to view user dashboard or signup if you don't have
+                Login to view user dashboard or signup if you don't have
                 an account.
               </p>
               <div className="btn-group btn-style">
@@ -49,14 +49,14 @@ class Welcome extends Component {
                   onClick={this.onClickLogin}
                   className="btn btn-lg btn-success"
                 >
-                  Login
+                  Contractor Login
                 </button>
                 <button
                   type="button"
                   onClick={this.onClickSignup}
                   className="btn btn-lg btn-danger"
                 >
-                  Signup
+                  Contractor Signup
                 </button>
               </div>
             </div>
@@ -65,10 +65,10 @@ class Welcome extends Component {
               onClick={this.onClickAdminLogin}
               className="btn btn-sm btn-secondary btn-admin"
             >
-              S&E Officer Log In
+              DSOA Log In
             </button>
             <p className="text-danger">
-              Only use the officer login if you are a DSOA official and have the
+              DSOA login can only be used if you are a DSOA official and have the
               credentials
             </p>
           </div>
