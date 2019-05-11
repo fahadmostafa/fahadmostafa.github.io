@@ -21,6 +21,7 @@ import WarningWaste from "../../images/flagWarningWaste.png";
 import WarningWater from "../../images/flagWarningWater.png";
 import Weather from "../../images/Weather.png";
 import Alert from "../../images/flagRed.png";
+import Warning from "../../images/flagWarning.png";
 import NoWarning from "../../images/flagGreen.png";
 
 class Home extends Component {
@@ -50,6 +51,7 @@ class Home extends Component {
     this.logout = this.logout.bind(this);
     this.getWarning = this.getWarning.bind(this);
     this.sendAck = this.sendAck.bind(this);
+    this.ackButtonUpdate = this.ackButtonUpdate.bind(this);
   }
 
   logout(e) {
@@ -81,28 +83,41 @@ class Home extends Component {
         this.getWarning();
       }, 6000);
 
-      log()
-        .then(res => {
-          let wardenCheck = 0;
-          let dateCheck = "";
-          res.forEach(item => {
-            wardenCheck = item.warden_identity;
-            dateCheck = item.warning_date;
-            if (
-              wardenCheck === this.state.userid &&
-              dateCheck === this.state.warningRecDate
-            ) {
-              this.setState({ acknowledgeFlag: true });
-            } else {
-              this.setState({ acknowledgeFlag: false });
-            }
-          });
-        })
-        .catch(err => {
-          console.log("Cannot check for acknowledgement status");
-        });
+      if (this.state.warningRecDate === "") {
+        setTimeout(() => {
+          this.ackButtonUpdate();
+        }, 1000);
+      } else {
+        this.ackButtonUpdate();
+      }
     }
   }
+
+  ackButtonUpdate = () => {
+    log()
+      .then(res => {
+        let wardenCheck = 0;
+        let dateCheck = "";
+
+        for (let i of res) {
+          wardenCheck = i.warden_identity;
+          dateCheck = i.warning_date;
+
+          if (
+            dateCheck === this.state.warningRecDate &&
+            wardenCheck === this.state.userid
+          ) {
+            this.setState({ acknowledgeFlag: true });
+            break;
+          } else {
+            this.setState({ acknowledgeFlag: false });
+          }
+        }
+      })
+      .catch(err => {
+        console.log("Cannot check for acknowledgement status");
+      });
+  };
 
   getWarning = () => {
     senddata()
@@ -136,7 +151,7 @@ class Home extends Component {
 
   sendAck(e) {
     e.preventDefault();
-    const acknowledgeDate = Date();
+    const acknowledgeDate = Date().toString();
 
     const ackArr = {
       userid: this.state.userid,
@@ -174,7 +189,7 @@ class Home extends Component {
             <img className="home-brand-resize" alt="DSOA Logo" src={Logo} />
           </div>
           <div className="col-sm home-title-div">
-            <h1 className="home-title">Weather Warning System - Home </h1>
+            <h1 className="home-title">Warning System</h1>
             <h6>You are logged in as {this.state.wardenName}</h6>
           </div>
           <div className="col-sm plot-btn-div">
@@ -244,7 +259,7 @@ class Home extends Component {
                               : item ===
                                 "Provide the adequate cooling mechanism at site"
                               ? WarningCooling
-                              : "reached here"
+                              : Warning
                           }
                         />
                       </div>
