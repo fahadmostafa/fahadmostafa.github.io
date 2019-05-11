@@ -59,25 +59,26 @@ class AdminHome extends Component {
         .catch(err => {
           console.log("Error loading checklist data");
         });
-      senddata().then(res => {
-        if (Object.keys(res).length === 0) {
-          this.setState({ warningSent: false });
-          this.setState({ alertSent: false });
-        } else {
-          if (res[0].warning_type === "warning") {
-            this.setState({ warningSent: true });
+      senddata()
+        .then(res => {
+          if (Object.keys(res).length === 0) {
+            this.setState({ warningSent: false });
+            this.setState({ alertSent: false });
           } else {
-            if (res[0].warning_type === "alert") {
-              this.setState({ alertSent: true });
+            if (res[0].warning_type === "warning") {
+              this.setState({ warningSent: true });
             } else {
-              window.alert("Something went wrong! Try refreshing the page.");
+              if (res[0].warning_type === "alert") {
+                this.setState({ alertSent: true });
+              } else {
+                window.alert("Something went wrong! Try refreshing the page.");
+              }
             }
           }
-        }
-      })
-      .catch(err => {
-        console.log("Cannot check status of warning/alert")
-      });
+        })
+        .catch(err => {
+          console.log("Cannot check status of warning/alert");
+        });
     }
   }
 
