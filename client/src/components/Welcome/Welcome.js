@@ -63,7 +63,7 @@ class Welcome extends Component {
             <button
               type="button"
               onClick={this.onClickAdminLogin}
-              className="btn btn-sm btn-secondary btn-admin"
+              className="btn btn-lg btn-secondary btn-admin"
             >
               DSOA Log In
             </button>

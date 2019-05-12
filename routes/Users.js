@@ -249,6 +249,26 @@ users.post("/adminlogin", (req, res) => {
     });
 });
 
+users.post("/changeplot", (req, res) => {
+  wardens
+  .update({
+    plot_number: req.body.newPlotNo
+  },
+  {
+    where: {
+      warden_id: req.body.userid
+    } 
+  })
+  .then(plotchange => {
+    if(plotchange){
+      res.json({ status: req.body.newPlotNo + " has been updated."});
+    }
+  })
+  .catch(err => {
+    res.status(404).json({error: "Could not update plot number"});
+  })
+})
+
 users.get("/usersinfo", (req, res) => {
   wardens
     .findAll({

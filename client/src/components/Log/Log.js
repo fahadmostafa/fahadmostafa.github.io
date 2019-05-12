@@ -125,7 +125,7 @@ class Log extends Component {
               </div>
               <div className="table-div">
               <div className="justify-content-center">
-                <label>&larr; scroll if the table is not completely visible &rarr;</label>
+                <label>&larr; scroll, if the table is not completely visible &rarr;</label>
               </div>
                 <table className="table table-striped" id="log-table">
                   <thead className="thead-light">
@@ -133,8 +133,8 @@ class Log extends Component {
                       <th>Log ID</th>
                       <th>Contractor ID</th>
                       <th>Contractor Plot No.</th>
-                      <th>Feedback Received Timestamp</th>
-                      <th>Warning Timestamp</th>
+                      <th>Feedback Received at</th>
+                      <th>Warning Sent at</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -153,7 +153,7 @@ class Log extends Component {
                 </table>
               </div>
               <div className="justify-content-center">
-                <label>&larr; scroll if the table is not completely visible &rarr;</label>
+                <label>&larr; scroll, if the table is not completely visible &rarr;</label>
               </div>
             </div>
           </div>

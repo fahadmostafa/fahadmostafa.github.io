@@ -112,13 +112,14 @@ class UsersInfo extends Component {
                   Weather Warning System - List of Users{" "}
                 </h1>
               </div>
+              <label>&larr; scroll, if the table is not completely visible &rarr;</label>
               <div className="table-div">
               <table className="table table-striped">
                 <thead className="thead-light">
                   <tr>
-                    <th>Warden ID</th>
-                    <th>Warden Name</th>
-                    <th>Warden Contact</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Contact</th>
                     <th>Plot No</th>
                     <th>Contractor Name</th>
                     <th>Contractor Email</th>
@@ -144,7 +145,7 @@ class UsersInfo extends Component {
                 </tbody>
               </table>
               </div>
-              <label>&larr; scroll if the table is not completely visible &rarr;</label>
+              <label>&larr; scroll, if the table is not completely visible &rarr;</label>
             </div>
           </div>
           {/* /#page-content-wrapper */}
