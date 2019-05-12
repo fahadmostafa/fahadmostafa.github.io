@@ -110,10 +110,11 @@ users.post("/getdata", (req, res) => {
 users.post("/acksend", (req, res) => {
   const ackData = {
     warden_identity: req.body.userid,
-    feedback_ack: req.body.feedbackAck,
+    plot_no: req.body.userPlotNo,
     feedback_rec_time: req.body.acknowledgeDate,
     warning_date: req.body.warningRecDate
   };
+  
   warning_logs
     .create(ackData)
     .then(status => {

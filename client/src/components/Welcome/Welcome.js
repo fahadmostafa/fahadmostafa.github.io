@@ -37,7 +37,7 @@ class Welcome extends Component {
             </div>
 
             <div className="col-md-12">
-              <h1 className="web-name">Weather Warning System</h1>
+              <h1 className="web-name">Warning System</h1>
 
               <p className="tagline">
                 Login to view user dashboard or signup if you don't have
