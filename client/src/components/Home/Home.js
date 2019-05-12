@@ -4,6 +4,9 @@ import jwt_decode from "jwt-decode";
 import { senddata } from "../userFunctions";
 import { acksend } from "../userFunctions";
 import { log } from "../userFunctions";
+import { plot } from "../userFunctions";
+import { changeplot } from "../userFunctions";
+import $ from "jquery";
 import "./Home.css";
 import Logo from "../../images/dsoa-logo-white.png";
 import WarningLift from "../../images/flagWarningLift.png";
@@ -38,6 +41,8 @@ class Home extends Component {
       contractorContact: "",
       consultantName: "",
       plotNo: "",
+      newPlotNo: "",
+      plotData: [],
       errors: {},
       warningFlag: false,
       alertFlag: false,
@@ -52,6 +57,8 @@ class Home extends Component {
     this.getWarning = this.getWarning.bind(this);
     this.sendAck = this.sendAck.bind(this);
     this.ackButtonUpdate = this.ackButtonUpdate.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   logout(e) {
@@ -90,6 +97,13 @@ class Home extends Component {
       } else {
         this.ackButtonUpdate();
       }
+      plot()
+        .then(res => {
+          this.setState({ plotData: res });
+        })
+        .catch(err => {
+          console.log("Cannot load plot data");
+        });
     }
   }
 
@@ -169,6 +183,33 @@ class Home extends Component {
       .catch(err => {
         console.log("Cannot acknowledge!");
       });
+  }
+
+  onSubmit(e) {
+    if (this.state.newPlotNo) {
+      e.preventDefault();
+
+      const newPlot = {
+        userid: this.state.userid,
+        newPlotNo: this.state.newPlotNo
+      };
+
+      changeplot(newPlot)
+        .then(res => {
+          if (res.status) {
+            window.alert("Plot number successfully updated");
+            $(".close").click();
+            this.setState({ plotNo: this.state.newPlotNo });
+          }
+        })
+        .catch(err => {
+          console.log("connection failed!!!");
+        });
+    }
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   componentWillUnmount() {
@@ -405,25 +446,35 @@ class Home extends Component {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
+
               <div className="modal-body">
-                <div className="form-label-group">
+                <form onSubmit={this.onSubmit}>
                   <div className="form-group">
                     <label htmlFor="plot">
-                      Plot no you are currently assigned in:
+                      Select plot no. you are currently assigned in:
                     </label>
+
                     <select
                       className="form-control"
                       id="plot"
-                      name="plotNo"
+                      name="newPlotNo"
+                      value={this.state.newPlotNo}
                       onChange={this.onChange}
+                      required
                     >
-                      <option>04-003</option>
-                      <option>06-020</option>
-                      <option>10-001</option>
-                      <option>10-003</option>
+                      <option />
+                      {this.state.plotData.map((item, key) => {
+                        return <option key={key}>{item.plot_no}</option>;
+                      })}
                     </select>
                   </div>
-                </div>
+
+                  <input
+                    type="submit"
+                    value="Save Changes"
+                    className="btn btn-primary"
+                  />
+                </form>
               </div>
               <div className="modal-footer">
                 <button
@@ -432,9 +483,6 @@ class Home extends Component {
                   data-dismiss="modal"
                 >
                   Close
-                </button>
-                <button type="button" className="btn btn-primary">
-                  Save changes
                 </button>
               </div>
             </div>

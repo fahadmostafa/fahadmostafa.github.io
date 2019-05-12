@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { signup } from "../userFunctions";
+import { plot } from "../userFunctions";
 import { Redirect } from "react-router-dom";
 import "./Signup.css";
 import Logo from "../../images/dsoa-logo-white.png";
@@ -18,6 +19,7 @@ class Signup extends Component {
       contractorContact: "",
       consultantName: "",
       plotNo: "",
+      plotData: [],
       errors: {},
       redirectToReferrer: false
     };
@@ -26,6 +28,16 @@ class Signup extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  componentDidMount() {
+    plot()
+      .then(res => {
+        this.setState({ plotData: res });
+      })
+      .catch(err => {
+        console.log("Cannot load plot data");
+      });
+  }
+  
   onSubmit(e) {
     if (
       this.state.wardenName &&
@@ -241,43 +253,10 @@ class Signup extends Component {
                       onChange={this.onChange}
                       required
                     >
-                      <option />
-                      <option>04-003</option>
-                      <option>06-020</option>
-                      <option>10-001</option>
-                      <option>10-003</option>
-                      <option>10-006</option>
-                      <option>10-015</option>
-                      <option>11-013</option>
-                      <option>11-043</option>
-                      <option>12-002</option>
-                      <option>12-007</option>
-                      <option>12-013</option>
-                      <option>12-016</option>
-                      <option>13-014</option>
-                      <option>13-015</option>
-                      <option>15-006</option>
-                      <option>21-011</option>
-                      <option>21-012</option>
-                      <option>21-016</option>
-                      <option>21-017</option>
-                      <option>21-020</option>
-                      <option>22-002</option>
-                      <option>22-003</option>
-                      <option>22-018</option>
-                      <option>22-024</option>
-                      <option>22-026</option>
-                      <option>23-007</option>
-                      <option>24-001</option>
-                      <option>25-055</option>
-                      <option>25-079</option>
-                      <option>26-030</option>
-                      <option>26-057</option>
-                      <option>26-059</option>
-                      <option>26-065</option>
-                      <option>27-019</option>
-                      <option>27-035</option>
-                      <option>28-016</option>
+                    <option />
+                      {this.state.plotData.map((item, key) => {
+                        return <option key={key}>{item.plot_no}</option>;
+                      })}
                     </select>
                   </div>
 

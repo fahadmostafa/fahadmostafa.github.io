@@ -36,6 +36,20 @@ export const adminsignup = newAdmin => {
     });
 };
 
+export const changeplot = newPlot => {
+  return axios
+  .post("users/changeplot", {
+    userid: newPlot.userid,
+    newPlotNo: newPlot.newPlotNo
+  })
+  .then(response => {
+    return response.data;
+  })
+  .catch(err => {
+    console.log("failed to update plot no.");
+  })
+}
+
 export const getdata = dataArr => {
   return axios
     .post("users/getdata", {
@@ -149,5 +163,16 @@ export const checklist = () => {
     })
     .catch(err => {
       console.log("No checklist data found");
+    });
+};
+
+export const plot = () => {
+  return axios
+    .get("users/plot")
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("No plot data found");
     });
 };
