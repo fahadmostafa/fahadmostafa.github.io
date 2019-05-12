@@ -16,8 +16,8 @@ module.exports = db.sequelize.define('warning_logs', {
         key: 'warden_id'
       }
     },
-    feedback_ack: {
-      type: Sequelize.INTEGER(1),
+    plot_no: {
+      type: Sequelize.STRING(255),
       allowNull: false
     },
     feedback_rec_time: {

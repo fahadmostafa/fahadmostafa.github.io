@@ -44,7 +44,7 @@ class Home extends Component {
       warningData: "",
       warningRecDate: "",
       warningType: "",
-      acknowledgeData: [],
+      ackCheck: false,
       acknowledgeFlag: false,
       redirectToReferrer: false
     };
@@ -75,7 +75,7 @@ class Home extends Component {
         contractorEmail: decoded.contractorEmail,
         contractorContact: decoded.contractorContact,
         consultantName: decoded.contractorName,
-        plotNo: decoded.plotNo
+        plotNo: decoded.plot_number
       });
 
       this.getWarning();
@@ -107,9 +107,11 @@ class Home extends Component {
             dateCheck === this.state.warningRecDate &&
             wardenCheck === this.state.userid
           ) {
+            this.setState({ ackCheck: true });
             this.setState({ acknowledgeFlag: true });
             break;
           } else {
+            this.setState({ ackCheck: true });
             this.setState({ acknowledgeFlag: false });
           }
         }
@@ -151,11 +153,11 @@ class Home extends Component {
 
   sendAck(e) {
     e.preventDefault();
-    const acknowledgeDate = Date().toString();
+    const acknowledgeDate = Date();
 
     const ackArr = {
       userid: this.state.userid,
-      feedbackAck: 1,
+      userPlotNo: this.state.plotNo,
       acknowledgeDate: acknowledgeDate,
       warningRecDate: this.state.warningRecDate
     };
@@ -278,25 +280,31 @@ class Home extends Component {
                 </div>
               );
             })}
-            {this.state.acknowledgeFlag ? (
-              <div className="col-md-6 offset-md-3 ack-box">
-                <label className="ack-text">
-                  Your acknowledgement has been received.
-                </label>
-              </div>
+            {this.state.ackCheck ? (
+              this.state.acknowledgeFlag ? (
+                <div className="col-md-6 offset-md-3 ack-box">
+                  <label className="ack-text">
+                    Your acknowledgement has been received.
+                  </label>
+                </div>
+              ) : (
+                <div className="col-md-6 offset-md-3 ack-box">
+                  <p className="text-danger ack-text">
+                    I hereby acknowledge that appropriate actions were taken
+                    infavour of the above warnings received.
+                  </p>
+                  <button
+                    type="button"
+                    className="btn btn-lg btn-success ack-btn"
+                    onClick={this.sendAck}
+                  >
+                    Acknowledge
+                  </button>
+                </div>
+              )
             ) : (
               <div className="col-md-6 offset-md-3 ack-box">
-                <p className="text-danger ack-text">
-                  I hereby acknowledge that appropriate actions were taken
-                  infavour of the above warnings received.
-                </p>
-                <button
-                  type="button"
-                  className="btn btn-lg btn-success ack-btn"
-                  onClick={this.sendAck}
-                >
-                  Acknowledge
-                </button>
+                <label className="ack-text">Loading ... Please Wait.</label>
               </div>
             )}
           </div>
@@ -316,25 +324,31 @@ class Home extends Component {
                 </div>
               </div>
             </div>
-            {this.state.acknowledgeFlag ? (
-              <div className="col-md-6 offset-md-3 ack-box">
-                <label className="ack-text">
-                  Your acknowledgement has been received.
-                </label>
-              </div>
+            {this.state.ackCheck ? (
+              this.state.acknowledgeFlag ? (
+                <div className="col-md-6 offset-md-3 ack-box">
+                  <label className="ack-text">
+                    Your acknowledgement has been received.
+                  </label>
+                </div>
+              ) : (
+                <div className="col-md-6 offset-md-3 ack-box">
+                  <p className="text-danger ack-text">
+                    I hereby acknowledge that all activities are stopped in
+                    favour of the above alert received.
+                  </p>
+                  <button
+                    type="button"
+                    className="btn btn-lg btn-success ack-btn"
+                    onClick={this.sendAck}
+                  >
+                    Acknowledge
+                  </button>
+                </div>
+              )
             ) : (
               <div className="col-md-6 offset-md-3 ack-box">
-                <p className="text-danger ack-text">
-                  I hereby acknowledge that all activities are stopped in favour
-                  of the above alert received.
-                </p>
-                <button
-                  type="button"
-                  className="btn btn-lg btn-success ack-btn"
-                  onClick={this.sendAck}
-                >
-                  Acknowledge
-                </button>
+                <label className="ack-text">Loading ... Please Wait.</label>
               </div>
             )}
           </div>

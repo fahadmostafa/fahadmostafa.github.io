@@ -144,7 +144,7 @@ class UsersInfo extends Component {
                 </tbody>
               </table>
               </div>
-              <label>&larr; scroll &rarr;</label>
+              <label>&larr; scroll if the table is not completely visible &rarr;</label>
             </div>
           </div>
           {/* /#page-content-wrapper */}

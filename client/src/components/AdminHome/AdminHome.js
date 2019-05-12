@@ -264,7 +264,7 @@ class AdminHome extends Component {
             <div className="container-fluid">
               <div className="col-sm home-title-div">
                 <h1 className="admin-home-title">
-                  Weather Warning System - Admin Home
+                  Warning System
                 </h1>
                 <h6>You are logged in as {this.state.adminName}</h6>
               </div>

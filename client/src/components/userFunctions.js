@@ -77,7 +77,7 @@ export const acksend = ackArr => {
   return axios
     .post("users/acksend", {
       userid: ackArr.userid,
-      feedbackAck: ackArr.feedbackAck,
+      userPlotNo: ackArr.userPlotNo,
       acknowledgeDate: ackArr.acknowledgeDate,
       warningRecDate: ackArr.warningRecDate
     })
