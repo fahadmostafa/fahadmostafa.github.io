@@ -98,6 +98,18 @@ class Log extends Component {
               >
                 Users data
               </a>
+              <a
+                href="/updatechecklist"
+                className="list-group-item list-group-item-action bg-light"
+              >
+                Update Checklist
+              </a>
+              <a
+                href="/updateplotno"
+                className="list-group-item list-group-item-action bg-light"
+              >
+                Update Plot No.
+              </a>
             </div>
           </div>
           {/* /#sidebar-wrapper */}
@@ -119,14 +131,12 @@ class Log extends Component {
 
             <div className="container-fluid">
               <div className="col-sm home-title-div">
-                <h1 className="admin-log-title">
-                  Weather Warning System - Log{" "}
-                </h1>
+                <h1 className="admin-log-title">Log</h1>
+              </div>
+              <div className="justify-content-center">
+                <label>&larr; &uarr; Scroll, if required &darr; &rarr;</label>
               </div>
               <div className="table-div">
-              <div className="justify-content-center">
-                <label>&larr; scroll, if the table is not completely visible &rarr;</label>
-              </div>
                 <table className="table table-striped" id="log-table">
                   <thead className="thead-light">
                     <tr>
@@ -138,22 +148,32 @@ class Log extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.tableData.map((item, key) => {
-                      return (
-                        <tr key={key}>
-                          <td>{item.log_id}</td>
-                          <td>{item.warden_identity}</td>
-                          <td>{item.plot_no}</td>
-                          <td>{item.feedback_rec_time}</td>
-                          <td>{item.warning_date}</td>
-                        </tr>
-                      );
-                    })}
+                    {this.state.tableData === undefined ? (
+                      <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td>
+                          Reloading...
+                          {window.location.reload()}
+                        </td>
+                        <td />
+                      </tr>
+                    ) : (
+                      this.state.tableData.map((item, key) => {
+                        return (
+                          <tr key={key}>
+                            <td>{item.log_id}</td>
+                            <td>{item.warden_identity}</td>
+                            <td>{item.plot_no}</td>
+                            <td>{item.feedback_rec_time}</td>
+                            <td>{item.warning_date}</td>
+                          </tr>
+                        );
+                      })
+                    )}
                   </tbody>
                 </table>
-              </div>
-              <div className="justify-content-center">
-                <label>&larr; scroll, if the table is not completely visible &rarr;</label>
               </div>
             </div>
           </div>

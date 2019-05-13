@@ -38,17 +38,17 @@ export const adminsignup = newAdmin => {
 
 export const changeplot = newPlot => {
   return axios
-  .post("users/changeplot", {
-    userid: newPlot.userid,
-    newPlotNo: newPlot.newPlotNo
-  })
-  .then(response => {
-    return response.data;
-  })
-  .catch(err => {
-    console.log("failed to update plot no.");
-  })
-}
+    .post("users/changeplot", {
+      userid: newPlot.userid,
+      newPlotNo: newPlot.newPlotNo
+    })
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("failed to update plot no.");
+    });
+};
 
 export const getdata = dataArr => {
   return axios
@@ -84,6 +84,19 @@ export const deletedata = () => {
     })
     .catch(err => {
       console.log("Failed to initiate delete");
+    });
+};
+
+export const removeitem = itemData => {
+  return axios
+    .post("users/removeitem", {
+      item: itemData.item
+    }, console.log(itemData.item))
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("Item removing could not initiate");
     });
 };
 

@@ -114,7 +114,7 @@ users.post("/acksend", (req, res) => {
     feedback_rec_time: req.body.acknowledgeDate,
     warning_date: req.body.warningRecDate
   };
-  
+
   warning_logs
     .create(ackData)
     .then(status => {
@@ -251,23 +251,25 @@ users.post("/adminlogin", (req, res) => {
 
 users.post("/changeplot", (req, res) => {
   wardens
-  .update({
-    plot_number: req.body.newPlotNo
-  },
-  {
-    where: {
-      warden_id: req.body.userid
-    } 
-  })
-  .then(plotchange => {
-    if(plotchange){
-      res.json({ status: req.body.newPlotNo + " has been updated."});
-    }
-  })
-  .catch(err => {
-    res.status(404).json({error: "Could not update plot number"});
-  })
-})
+    .update(
+      {
+        plot_number: req.body.newPlotNo
+      },
+      {
+        where: {
+          warden_id: req.body.userid
+        }
+      }
+    )
+    .then(plotchange => {
+      if (plotchange) {
+        res.json({ status: req.body.newPlotNo + " has been updated." });
+      }
+    })
+    .catch(err => {
+      res.status(404).json({ error: "Could not update plot number" });
+    });
+});
 
 users.get("/usersinfo", (req, res) => {
   wardens
@@ -312,6 +314,32 @@ users.delete("/deletedata", (req, res) => {
     .catch(err =>
       res.json({
         error: "Could not cancel warning/alert."
+      })
+    );
+});
+
+users.post("/removeitem", (req, res) => {
+  checklists
+    .destroy({
+      where: {
+        checklist_id: req.body.item
+      }
+    })
+    .then(status => {
+      console.log(status);
+      if (status) {
+        res.json({
+          success: "Checklist item has been deleted"
+        });
+      } else {
+        res.json({
+          failure: "Failed to delete"
+        });
+      }
+    })
+    .catch(err =>
+      res.json({
+        error: "Could not delete, not found. " + req.body.item
       })
     );
 });
