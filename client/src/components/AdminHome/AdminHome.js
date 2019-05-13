@@ -242,6 +242,18 @@ class AdminHome extends Component {
               >
                 Users data
               </a>
+              <a
+                href="/updatechecklist"
+                className="list-group-item list-group-item-action bg-light"
+              >
+                Update Checklist
+              </a>
+              <a
+                href="/updateplotno"
+                className="list-group-item list-group-item-action bg-light"
+              >
+                Update Plot No.
+              </a>
             </div>
           </div>
           {/* /#sidebar-wrapper */}

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Logo from "../../images/dsoa-logo-white.png";
-import { usersinfo } from "../userFunctions";
+import { checklist } from "../userFunctions";
+import { removeitem } from "../userFunctions";
 import jwt_decode from "jwt-decode";
 import $ from "jquery";
-import "./UsersInfo.css";
+import "./UpdateChecklist.css";
 
-class UsersInfo extends Component {
+class UpdateChecklist extends Component {
   constructor(props) {
     super(props);
 
@@ -14,10 +15,13 @@ class UsersInfo extends Component {
       adminName: "",
       username: "",
       errors: {},
-      tableData: [],
+      checklistData: [],
+      deleteItem: "",
       redirectToReferrer: false
     };
     this.logout = this.logout.bind(this);
+    this.getChecklist = this.getChecklist.bind(this);
+    this.onRemove = this.onRemove.bind(this);
   }
 
   logout(e) {
@@ -41,15 +45,45 @@ class UsersInfo extends Component {
         $("#wrapper").toggleClass("toggled");
       });
 
-      usersinfo().then(
-        res => {
-          this.setState({ tableData: res });
-        },
-        err => {
-          console.log("Error loading table data");
-        }
-      );
+      this.getChecklist();
     }
+  }
+
+  getChecklist = () => {
+    checklist()
+      .then(res => {
+        this.setState({ checklistData: res });
+      })
+      .catch(err => {
+        console.log("Error loading data");
+      });
+  };
+
+  onRemove(item) {
+    var itemData = {
+      item: item.checklist_id
+    };
+
+    console.log(itemData);
+
+    removeitem(itemData)
+      .then(res => {
+        if (res.success) {
+          window.alert("The item has been removed");
+          this.getChecklist();
+        } else {
+          if (res.error) {
+            window.alert("Error: Cannot remove");
+          } else {
+            if (res.failure) {
+              window.alert("Fail: Cannot remove");
+            }
+          }
+        }
+      })
+      .catch(err => {
+        console.log("Could not cancel due to an unexpected error.");
+      });
   }
 
   render() {
@@ -120,52 +154,55 @@ class UsersInfo extends Component {
 
             <div className="container-fluid">
               <div className="col-sm home-title-div">
-                <h1 className="admin-home-title">Contractors List</h1>
+                <h1 className="admin-log-title">Update Checklist</h1>
               </div>
               <div className="justify-content-center">
                 <label>&larr; &uarr; Scroll, if required &darr; &rarr;</label>
               </div>
-              <div className="table-div">
-                <table className="table table-striped">
+              <div className="table-div-checklist">
+                <table className="table table-striped" id="log-table">
                   <thead className="thead-light">
                     <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Contact</th>
-                      <th>Plot No</th>
-                      <th>Contractor Name</th>
-                      <th>Contractor Email</th>
-                      <th>Contractor Contact</th>
-                      <th>Consultant Name</th>
+                      <th>Checklist Item</th>
+                      <th>Weather Condition</th>
+                      <th />
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.tableData === undefined ? (
+                    {this.state.checklistData === undefined ? (
                       <tr>
-                        <td />
-                        <td />
-                        <td />
                         <td />
                         <td>
                           Reloading...
                           {window.location.reload()}
                         </td>
                         <td />
-                        <td />
-                        <td />
                       </tr>
                     ) : (
-                      this.state.tableData.map((item, key) => {
+                      this.state.checklistData.map(item => {
                         return (
-                          <tr key={key}>
-                            <td>{item.warden_id}</td>
-                            <td>{item.warden_name}</td>
-                            <td>{item.warden_contact}</td>
-                            <td>{item.plot_number}</td>
-                            <td>{item.contractor_name}</td>
-                            <td>{item.contractor_email}</td>
-                            <td>{item.contractor_contact}</td>
-                            <td>{item.consultant_name}</td>
+                          <tr key={item.checklist_id}>
+                            <td>{item.checklist_item}</td>
+                            <td>
+                              {item.condition_id === 1
+                                ? "Rain"
+                                : item.condition_id === 2
+                                ? "Visibility"
+                                : item.condition_id === 3
+                                ? "Wind Speed"
+                                : item.condition_id === 4
+                                ? "High Temp"
+                                : "-"}
+                            </td>
+                            <td>
+                              <button
+                                type="submit"
+                                onClick={() => this.onRemove(item)}
+                                className="btn btn-danger"
+                              >
+                                Remove
+                              </button>
+                            </td>
                           </tr>
                         );
                       })
@@ -182,4 +219,4 @@ class UsersInfo extends Component {
   }
 }
 
-export default UsersInfo;
+export default UpdateChecklist;
