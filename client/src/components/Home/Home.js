@@ -208,6 +208,8 @@ class Home extends Component {
             this.setState({ plotNo: this.state.newPlotNo }, () => {
               this.setState({ newPlotNo: "" });
             });
+            localStorage.removeItem("usertoken");
+            this.setState({ redirectToReferrer: true });
           }
         })
         .catch(err => {
@@ -226,7 +228,7 @@ class Home extends Component {
 
   render() {
     if (this.state.redirectToReferrer) {
-      return <Redirect to={"/"} />;
+      return <Redirect to={"/login"} />;
     }
     if (localStorage.getItem("admintoken")) {
       return <Redirect to={"/adminhome"} />;
@@ -491,7 +493,9 @@ class Home extends Component {
                   />
                 </form>
                 <p className="text-danger ack-text">
-                  Note: Do not change the plot number unless you are relocated
+                  Note: Do not change the plot number unless you are relocated,
+                  You will need to login again to ensure that the changes are
+                  saved.
                 </p>
               </div>
               <div className="modal-footer">
