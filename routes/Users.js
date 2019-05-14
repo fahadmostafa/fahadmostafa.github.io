@@ -135,6 +135,52 @@ users.post("/acksend", (req, res) => {
     );
 });
 
+users.post("/submititem", (req, res) => {
+  const newData = {
+    checklist_item: req.body.newItem,
+    condition_id: req.body.newItemWeatherCond
+  };
+
+  checklists
+    .create(newData)
+    .then(done => {
+      res.json({ success: "Checklist item is added." });
+    })
+    .catch(err => {
+      res.send("error: " + err);
+    });
+});
+
+users.post("/submitplot", (req, res) => {
+  const newPlot = {
+    plot_no: req.body.newPlot
+  };
+
+  plots
+    .findOne({
+      where: {
+        plot_no: req.body.newPlot
+      }
+    })
+    .then(data => {
+      if (!data) {
+        plots
+          .create(newPlot)
+          .then(done => {
+            res.json({ success: "Plot is added." });
+          })
+          .catch(err => {
+            res.send("error: " + err);
+          });
+      } else {
+        res.json({ exist: "Plot no. already exists." });
+      }
+    })
+    .catch(err => {
+      res.send("error: " + err);
+    });
+});
+
 users.post("/adminsignup", (req, res) => {
   const adminData = {
     admin_name: req.body.adminName,
@@ -339,7 +385,33 @@ users.post("/removeitem", (req, res) => {
     })
     .catch(err =>
       res.json({
-        error: "Could not delete, not found. " + req.body.item
+        error: "Could not delete, not found. "
+      })
+    );
+});
+
+users.post("/removeplot", (req, res) => {
+  plots
+    .destroy({
+      where: {
+        plot_no: req.body.plot
+      }
+    })
+    .then(status => {
+      console.log(status);
+      if (status) {
+        res.json({
+          success: "Plot has been deleted"
+        });
+      } else {
+        res.json({
+          failure: "Failed to delete"
+        });
+      }
+    })
+    .catch(err =>
+      res.json({
+        error: "Could not delete, not found. "
       })
     );
 });
@@ -351,6 +423,17 @@ users.get("/log", (req, res) => {
     })
     .then(log => {
       res.end(JSON.stringify(log));
+    })
+    .catch(err => {
+      res.status(404).json({ err });
+    });
+});
+
+users.get("/condition", (req, res) => {
+  weather_conditions
+    .findAll()
+    .then(condition => {
+      res.end(JSON.stringify(condition));
     })
     .catch(err => {
       res.status(404).json({ err });

@@ -1,0 +1,21 @@
+.table-div-plot {
+    max-height: 700px;
+    max-width: 500px;
+    overflow: auto;
+    border-left: .5px solid rgba(82, 82, 82, 0.863);
+    border-right: .5px solid rgba(82, 82, 82, 0.863);
+    margin: auto;
+}
+
+.plot-table-head, .plot-table-body {
+    text-align: center;
+}
+
+.scroll-label {
+    text-align: center;
+}
+
+.form-container {
+    padding-top: 30px;
+    margin-bottom: 30px;
+}

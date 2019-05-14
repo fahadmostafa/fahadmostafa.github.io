@@ -278,7 +278,7 @@ class AdminHome extends Component {
                 <h1 className="admin-home-title">
                   Warning System
                 </h1>
-                <h6>You are logged in as {this.state.adminName}</h6>
+                <h6>Welcome back, {this.state.adminName}</h6>
               </div>
               <div className="btn-box">
                 {this.state.warningSent ? (

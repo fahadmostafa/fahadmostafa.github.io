@@ -1,7 +1,5 @@
-@import url(//db.onlinewebfonts.com/c/ca95c48955899f16fc852f1a8fe30b87?family=KGHAPPYSolidW00-Regular);
-
 .back {
-  background-color: rgba(226, 226, 226, 0.719);
+  background-color: rgba(211, 211, 211, 0.678);
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -35,17 +33,6 @@
 
 .log-out-btn {
   margin-left: 10px;
-}
-
-.warnings-label-box {
-  text-align: center;
-}
-
-.warnings-label {
-  font-family: "KGHAPPYSolidW00-Regular";
-  font-size: 2vh;
-  color: rgba(255, 0, 0, 0.801);
-  margin-top: 50px;
 }
 
 .box-contain-warnings {

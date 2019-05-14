@@ -36,6 +36,33 @@ export const adminsignup = newAdmin => {
     });
 };
 
+export const submititem = newItem => {
+  return axios
+    .post("users/submititem", {
+      newItem: newItem.newItem,
+      newItemWeatherCond: newItem.newItemWeatherCond
+    })
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("Error: Item could not be sent");
+    });
+};
+
+export const submitplot = newPlot => {
+  return axios
+    .post("users/submitplot", {
+      newPlot: newPlot.newPlot
+    })
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("Error: Plot could not be sent");
+    });
+};
+
 export const changeplot = newPlot => {
   return axios
     .post("users/changeplot", {
@@ -89,14 +116,33 @@ export const deletedata = () => {
 
 export const removeitem = itemData => {
   return axios
-    .post("users/removeitem", {
-      item: itemData.item
-    }, console.log(itemData.item))
+    .post(
+      "users/removeitem",
+      {
+        item: itemData.item
+      },
+    )
     .then(response => {
       return response.data;
     })
     .catch(err => {
-      console.log("Item removing could not initiate");
+      console.log("Item removing could not be initiated");
+    });
+};
+
+export const removeplot = plotData => {
+  return axios
+    .post(
+      "users/removeplot",
+      {
+        plot: plotData.plot
+      },
+    )
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("Plot removing could not be initiated");
     });
 };
 
@@ -165,6 +211,17 @@ export const log = () => {
     })
     .catch(err => {
       console.log("No log data found");
+    });
+};
+
+export const condition = () => {
+  return axios
+    .get("users/condition")
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log("No weather condition data found");
     });
 };
 
