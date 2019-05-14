@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Logo from "../../images/dsoa-logo-white.png";
 import { checklist } from "../userFunctions";
+import { condition } from "../userFunctions";
+import { submititem } from "../userFunctions";
 import { removeitem } from "../userFunctions";
 import jwt_decode from "jwt-decode";
 import $ from "jquery";
@@ -16,12 +18,18 @@ class UpdateChecklist extends Component {
       username: "",
       errors: {},
       checklistData: [],
+      conditionData: [],
       deleteItem: "",
+      newItem: "",
+      newItemWeatherCond: 0,
       redirectToReferrer: false
     };
     this.logout = this.logout.bind(this);
     this.getChecklist = this.getChecklist.bind(this);
+    this.getConditions = this.getConditions.bind(this);
     this.onRemove = this.onRemove.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmitForm = this.onSubmitForm.bind(this);
   }
 
   logout(e) {
@@ -46,6 +54,7 @@ class UpdateChecklist extends Component {
       });
 
       this.getChecklist();
+      this.getConditions();
     }
   }
 
@@ -59,12 +68,20 @@ class UpdateChecklist extends Component {
       });
   };
 
+  getConditions = () => {
+    condition()
+      .then(res => {
+        this.setState({ conditionData: res });
+      })
+      .catch(err => {
+        console.log("Error loading data");
+      });
+  };
+
   onRemove(item) {
     var itemData = {
       item: item.checklist_id
     };
-
-    console.log(itemData);
 
     removeitem(itemData)
       .then(res => {
@@ -84,6 +101,31 @@ class UpdateChecklist extends Component {
       .catch(err => {
         console.log("Could not cancel due to an unexpected error.");
       });
+  }
+
+  onSubmitForm(e) {
+    if (this.state.newItem && this.state.newItemWeatherCond) {
+      e.preventDefault();
+
+      const newItem = {
+        newItem: this.state.newItem,
+        newItemWeatherCond: this.state.newItemWeatherCond
+      };
+
+      submititem(newItem).then(res => {
+        if (res.error) {
+          window.alert("Saving failed, try again");
+        } else {
+          window.alert("Checklist has been saved.");
+          this.setState({ newItem: "", newItemWeatherCond: 0 });
+          this.getChecklist();
+        }
+      });
+    }
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -209,6 +251,65 @@ class UpdateChecklist extends Component {
                     )}
                   </tbody>
                 </table>
+              </div>
+              <div className="row justify-content-center form-container">
+                <div className="col-sm-6 form-box">
+                  <h6>Add new checklist activity:</h6>
+                  <form id="checklistForm" onSubmit={this.onSubmitForm}>
+                    <div className="form-label-group">
+                      <input
+                        name="newItem"
+                        value={this.state.newItem}
+                        onChange={this.onChange}
+                        className="form-control"
+                        id="inputNewItem"
+                        placeholder="Activity"
+                        type="text"
+                        title="Write the name of the activity to add as a checklist item for warnings."
+                        required
+                      />
+                      <label htmlFor="inputNewItem">
+                        Checklist Activity Name
+                      </label>
+                    </div>
+                    <div className="form-group ">
+                      <label htmlFor="relatedWeatherCondition">
+                        Select related weather condition:
+                      </label>
+                      <select
+                        className="form-control"
+                        id="relatedWeatherCondition"
+                        name="newItemWeatherCond"
+                        value={this.state.newItemWeatherCond}
+                        onChange={this.onChange}
+                        required
+                      >
+                        <option />
+                        {this.state.conditionData === undefined ? (
+                          <option />
+                        ) : (
+                          this.state.conditionData.map(item => {
+                            return (
+                              <option key={item.weather_Id}>
+                                {item.weather_Id}
+                              </option>
+                            );
+                          })
+                        )}
+                      </select>
+                      <label>
+                        Note: 1 is Rain, 2 is Visibility, 3 is Wind Speed and 4
+                        is High Temp
+                      </label>
+                    </div>
+
+                    <input
+                      type="submit"
+                      value="Save"
+                      className="btn btn-sm btn-primary btn-block text-uppercase"
+                    />
+                  </form>
+                </div>
               </div>
             </div>
           </div>

@@ -12,7 +12,7 @@ import AdminHome from "./components/AdminHome/AdminHome";
 import Log from "./components/Log/Log";
 import UsersInfo from "./components/UsersInfo/UsersInfo";
 import UpdateChecklist from "./components/UpdateChecklist/UpdateChecklist";
-// import UpdatePlotNo from "./components/UpdatePlotNo/UpdatePlotNo";
+import UpdatePlotNo from "./components/UpdatePlotNo/UpdatePlotNo";
 import Signup from "././components/Signup/Signup";
 import NotFound from "././components/NotFound/NotFound";
 
@@ -37,7 +37,7 @@ class App extends Component {
           <Route path="/log" component={Log} />
           <Route path="/usersinfo" component={UsersInfo} />
           <Route path="/updatechecklist" component={UpdateChecklist} />
-          {/* <Route path="/updateplotno" component={UpdatePlotNo} /> */}
+          <Route path="/updateplotno" component={UpdatePlotNo} />
           <Route path="/Signup" component={Signup} />
           <Route path="*" component={NotFound} />
         </Switch>

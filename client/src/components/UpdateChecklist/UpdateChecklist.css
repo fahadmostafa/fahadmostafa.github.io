@@ -1,4 +1,10 @@
 .table-div-checklist {
     max-height: 550px;
     overflow: auto;
+    border: .5px solid gray;
+}
+
+.form-container {
+    padding-top: 30px;
+    margin-bottom: 30px;
 }

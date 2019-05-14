@@ -86,6 +86,7 @@ class Home extends Component {
       });
 
       this.getWarning();
+
       this.update = setInterval(() => {
         this.getWarning();
       }, 6000);
@@ -93,7 +94,7 @@ class Home extends Component {
       if (this.state.warningRecDate === "") {
         setTimeout(() => {
           this.ackButtonUpdate();
-        }, 1000);
+        }, 2000);
       } else {
         this.ackButtonUpdate();
       }
@@ -113,20 +114,25 @@ class Home extends Component {
         let wardenCheck = 0;
         let dateCheck = "";
 
-        for (let i of res) {
-          wardenCheck = i.warden_identity;
-          dateCheck = i.warning_date;
+        if (res.length === 0) {
+          this.setState({ ackCheck: true });
+          this.setState({ acknowledgeFlag: false });
+        } else {
+          for (let i of res) {
+            wardenCheck = i.warden_identity;
+            dateCheck = i.warning_date;
 
-          if (
-            dateCheck === this.state.warningRecDate &&
-            wardenCheck === this.state.userid
-          ) {
-            this.setState({ ackCheck: true });
-            this.setState({ acknowledgeFlag: true });
-            break;
-          } else {
-            this.setState({ ackCheck: true });
-            this.setState({ acknowledgeFlag: false });
+            if (
+              dateCheck === this.state.warningRecDate &&
+              wardenCheck === this.state.userid
+            ) {
+              this.setState({ ackCheck: true });
+              this.setState({ acknowledgeFlag: true });
+              break;
+            } else {
+              this.setState({ ackCheck: true });
+              this.setState({ acknowledgeFlag: false });
+            }
           }
         }
       })
@@ -199,7 +205,9 @@ class Home extends Component {
           if (res.status) {
             window.alert("Plot number successfully updated");
             $(".close").click();
-            this.setState({ plotNo: this.state.newPlotNo });
+            this.setState({ plotNo: this.state.newPlotNo }, () => {
+              this.setState({ newPlotNo: "" });
+            });
           }
         })
         .catch(err => {
@@ -233,7 +241,9 @@ class Home extends Component {
           </div>
           <div className="col-sm home-title-div">
             <h1 className="home-title">Warning System</h1>
-            <h6>You are logged in as {this.state.wardenName}</h6>
+            <h6>
+              Hi {this.state.wardenName}, you are in Plot {this.state.plotNo}
+            </h6>
           </div>
           <div className="col-sm plot-btn-div">
             <button
@@ -256,71 +266,75 @@ class Home extends Component {
         {/*  */}
         {this.state.warningFlag ? (
           <div>
-            {this.state.warningData.map((item, key) => {
-              return (
-                <div className="row justify-content-center" key={key}>
-                  {(counter = counter + 1)}
-                  <div className="col-8 content-box warning-box">
-                    <div className="row">
-                      <div className="col-3 flag-box align-self-center">
-                        <img
-                          className="img-warning"
-                          alt="Yellow Flag"
-                          src={
-                            item === "Stop Work on elevation (using cradles)"
-                              ? WarningElevation
-                              : item ===
-                                "Maintain the regular disposal of garbage to avoid air contamination"
-                              ? WarningWaste
-                              : item === "Cover all the stored materials"
-                              ? WarningCover
-                              : item === "Secure all the electric connections"
-                              ? WarningElectric
-                              : item === "Remove stagnant water"
-                              ? WarningPuddle
-                              : item === "Conduct pest control (after rain)"
-                              ? WarningPest
-                              : item === "Stop all the lifting operation" ||
-                                item === "Stop the lifting operation"
-                              ? WarningLift
-                              : item ===
-                                "Earth moving machineries to be stopped"
-                              ? WarningMachineries
-                              : item === "Maintain the external fence"
-                              ? WarningFence
-                              : item === "Stock pile to be covered properly"
-                              ? WarningCover
-                              : item ===
-                                "Implement the circular for Mid-Day Break"
-                              ? WarningMidday
-                              : item ===
-                                "Suspend all work activities from 15th Jun 2019 to 15th Sept 2019 (12:30 PM - 3:00 PM)"
-                              ? WarningSummer
-                              : item ===
-                                "Provide adequate drinking water facility at site"
-                              ? WarningWater
-                              : item ===
-                                "Provide the adequate cooling mechanism at site"
-                              ? WarningCooling
-                              : Warning
-                          }
-                        />
-                      </div>
-                      <div className="col align-self-center">
-                        <img
-                          className="weather-type"
-                          alt="Type of weather condition"
-                          src={Weather}
-                        />
-                      </div>
-                      <div className="col-md-6 align-self-center">
-                        <p className="warning-description">{item}</p>
+            {this.state.warningData === undefined ? (
+              <label className="ack-text">Loading ... Please wait.</label>
+            ) : (
+              this.state.warningData.map((item, key) => {
+                return (
+                  <div className="row justify-content-center" key={key}>
+                    {(counter = counter + 1)}
+                    <div className="col-8 content-box warning-box">
+                      <div className="row">
+                        <div className="col-3 flag-box align-self-center">
+                          <img
+                            className="img-warning"
+                            alt="Yellow Flag"
+                            src={
+                              item === "Stop Work on elevation (using cradles)"
+                                ? WarningElevation
+                                : item ===
+                                  "Maintain the regular disposal of garbage to avoid air contamination"
+                                ? WarningWaste
+                                : item === "Cover all the stored materials"
+                                ? WarningCover
+                                : item === "Secure all the electric connections"
+                                ? WarningElectric
+                                : item === "Remove stagnant water"
+                                ? WarningPuddle
+                                : item === "Conduct pest control (after rain)"
+                                ? WarningPest
+                                : item === "Stop all the lifting operation" ||
+                                  item === "Stop the lifting operation"
+                                ? WarningLift
+                                : item ===
+                                  "Earth moving machineries to be stopped"
+                                ? WarningMachineries
+                                : item === "Maintain the external fence"
+                                ? WarningFence
+                                : item === "Stock pile to be covered properly"
+                                ? WarningCover
+                                : item ===
+                                  "Implement the circular for Mid-Day Break"
+                                ? WarningMidday
+                                : item ===
+                                  "Suspend all work activities from 15th Jun 2019 to 15th Sept 2019 (12:30 PM - 3:00 PM)"
+                                ? WarningSummer
+                                : item ===
+                                  "Provide adequate drinking water facility at site"
+                                ? WarningWater
+                                : item ===
+                                  "Provide the adequate cooling mechanism at site"
+                                ? WarningCooling
+                                : Warning
+                            }
+                          />
+                        </div>
+                        <div className="col align-self-center">
+                          <img
+                            className="weather-type"
+                            alt="Type of weather condition"
+                            src={Weather}
+                          />
+                        </div>
+                        <div className="col-md-6 align-self-center">
+                          <p className="warning-description">{item}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
             {this.state.ackCheck ? (
               this.state.acknowledgeFlag ? (
                 <div className="col-md-6 offset-md-3 ack-box">
@@ -345,7 +359,9 @@ class Home extends Component {
               )
             ) : (
               <div className="col-md-6 offset-md-3 ack-box">
-                <label className="ack-text">Loading ... Please Wait.</label>
+                <label className="ack-text">
+                  Loading ... Please wait. This might take a while.
+                </label>
               </div>
             )}
           </div>
@@ -389,7 +405,9 @@ class Home extends Component {
               )
             ) : (
               <div className="col-md-6 offset-md-3 ack-box">
-                <label className="ack-text">Loading ... Please Wait.</label>
+                <label className="ack-text">
+                  Loading ... Please wait. This might take a while
+                </label>
               </div>
             )}
           </div>
@@ -415,13 +433,6 @@ class Home extends Component {
         )}
 
         {/*  */}
-
-        <div className="license-box">
-          <label>
-            Icons made by Smashicons, mynamepong and Freepik from
-            www.flaticon.com is licensed by CC 3.0 BY
-          </label>
-        </div>
 
         <div
           className="modal fade"
@@ -463,9 +474,13 @@ class Home extends Component {
                       required
                     >
                       <option />
-                      {this.state.plotData.map((item, key) => {
-                        return <option key={key}>{item.plot_no}</option>;
-                      })}
+                      {this.state.plotData === undefined ? (
+                        <option />
+                      ) : (
+                        this.state.plotData.map((item, key) => {
+                          return <option key={key}>{item.plot_no}</option>;
+                        })
+                      )}
                     </select>
                   </div>
 
@@ -475,6 +490,9 @@ class Home extends Component {
                     className="btn btn-primary"
                   />
                 </form>
+                <p className="text-danger ack-text">
+                  Note: Do not change the plot number unless you are relocated
+                </p>
               </div>
               <div className="modal-footer">
                 <button
