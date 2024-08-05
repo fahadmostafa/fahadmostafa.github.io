@@ -1,5 +1,6 @@
-/* Copyright 2019
- * Unauthorized modifications, copying, and distribution of this file, via any medium is  * strictly prohibited
+/* Copyright 2024
+ * Unauthorized modifications, copying, and distribution of this file, via any medium is  
+ * strictly prohibited
  * Proprietary and confidential
  * Permission must be taken before using it
  * Written by Fahad Mostafa <fahadmustafa04@gmail.com>, April 2019
